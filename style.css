@@ -1,6 +1,6 @@
 html {
   	box-sizing: border-box;
-  	background-color: grey /*#a4daab*/;
+  	background-color: #a4daab;
   	height: 100%;
 }
 
@@ -21,6 +21,18 @@ body {
 main {
 	display: flex;
 	justify-content: center;
+	font-family: "Josefin Sans";
+}
+
+.chord-container h1 {
+	font-size: 4em;
+	font-weight: 100;
+	text-align: center;
+	margin: 0;
+}
+
+h1 sup {
+	font-weight: 100;
 }
 
 nav h1 {
