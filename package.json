@@ -1,0 +1,19 @@
+{
+  "name": "learn-ukulele",
+  "version": "1.0.0",
+  "description": "A website about ukelele chords",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdobrowner/learn-ukulele.git"
+  },
+  "author": "Jason Dobrowner and Monika Zarako-Dobrowner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdobrowner/learn-ukulele/issues"
+  },
+  "homepage": "https://github.com/jdobrowner/learn-ukulele#readme"
+}

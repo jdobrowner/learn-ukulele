@@ -1,0 +1,55 @@
+html {
+  	box-sizing: border-box;
+  	background-color: #a4daab;
+  	height: 100%;
+}
+
+*, *:before, *:after {
+  	box-sizing: inherit;
+}
+
+body {
+	color: white;
+	font-family: 'Quicksand', sans-serif;
+	font-weight: 300;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+}
+
+main {
+	display: flex;
+	justify-content: center;
+}
+
+nav h1 {
+	font-size: 3.5em;
+	text-align: center;
+	font-weight: 400;
+}
+
+canvas {
+	margin: 10px;
+}
+
+footer {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	margin-bottom: 10px;
+}
+
+ul {
+	margin: 0;
+	list-style: none;
+}
+
+
+td {
+	padding: 5px;
+}
+
+table {
+	padding: 0 10px;
+}
