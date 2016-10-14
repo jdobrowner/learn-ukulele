@@ -1,3 +1,11 @@
+//---------------- create function variables to hold unicode characters ------------
+
+var add = function(n) { return '' + n; };
+var sus = function(n) { return '' + n; };
+var maj7 = function() { return '' + '7'; };
+var fdim = function() { return '' + '7'; };
+var hdim = function() { return '' + '7'; };
+
 //------------ Global variable with state and chord library ------------------------
 
 var ukuApp = {
@@ -61,8 +69,8 @@ var ukuApp = {
     { rootNum: 4, isMinor: false, extension: hdim(), fingering: [0,2,0,1] }, // Edim7(half)
     { rootNum: 4, isMinor: false, extension: '', fingering: [0,4,3,1] }, // Edim
 
-    { rootNum: 5, isMinor: false, extension: '', fingering: [3,0,1,0] }, // F
-    { rootNum: 5, isMinor: false, extension: '', fingering: [3,0,1,3] }, // F
+    { rootNum: 5, isMinor: false, extension: '', fingering: [2,0,1,0] }, // F
+    { rootNum: 5, isMinor: false, extension: '', fingering: [2,0,1,3] }, // F
     { rootNum: 5, isMinor: false, extension: sus(2), fingering: [0,0,1,3] }, // Fsus2
     { rootNum: 5, isMinor: false, extension: sus(4), fingering: [3,0,1,1] }, // Fsus4
     { rootNum: 5, isMinor: false, extension: add(9), fingering: [0,0,1,0] }, // Fadd9
@@ -134,20 +142,51 @@ var ukuApp = {
   ]
 };
 
-
+//-------------------------------- on page load -----------------------------------
 $(function() {
-  // makeSounds();
   landingPage(1.5);
+  makeSounds();
 });
 
-/*
-function makeSounds() {}
 
-*/
+//------------------------------ use tone.js to play sounds -----------------------
+function makeSounds() {
+  var tones = loadWavesIntoArray();
+  var multiPlayer = new Tone.MultiPlayer(tones).toMaster();
+
+
+    $('main').on('click', '.chord-container', function(e) {
+      var chordIndex = Number($(this).attr('id'));
+      console.log(chordIndex);
+      var harmony = getTonesFromFingering(ukuApp.chordLibrary[chordIndex].fingering);
+      var now = Tone.now();
+      multiPlayer.start(harmony[0], now);
+      multiPlayer.start(harmony[1], now + 0.025);
+      multiPlayer.start(harmony[2], now + 0.05);
+      multiPlayer.start(harmony[3], now + 0.075);
+    });
+};
+
+//--------------------- store all sound files in a single array --------------------
+function loadWavesIntoArray() {
+  var toneArray = ["ukeTones/C.wav", "ukeTones/Cs.wav", "ukeTones/D.wav", "ukeTones/Ds.wav", "ukeTones/E.wav", "ukeTones/F.wav", "ukeTones/Fs.wav", "ukeTones/G.wav", "ukeTones/Gs.wav", "ukeTones/A.wav", "ukeTones/Bb.wav", "ukeTones/B.wav", "ukeTones/C4.wav", "ukeTones/Cs4.wav"];
+  return toneArray;
+}
+
+//------------------- calculate tones of chord based on finger position ------------
+function getTonesFromFingering(fingering) {
+  var tones = [];
+  tones.push(fingering[0] + 7);
+  tones.push(fingering[1]);
+  tones.push(fingering[2] + 4);
+  tones.push(fingering[3] + 9);
+  return tones;
+}
+
 
 //---------------------- from Monika's index.js -----------------------------
 
-function drawChord(size, array) {
+function drawChord(size, array, chordIndex) {
 
     //grid width and height
     var gridWidth = 150 * size;
@@ -162,7 +201,7 @@ function drawChord(size, array) {
     var canvasWidth = gridWidth + (padding * 2) + 1;
     var canvasHeight = gridHeight + paddingFromTop + 1;
 
-    var chordContainer = "<div class=chord-container></div>";
+    var chordContainer = "<div class=chord-container id=" + chordIndex + "></div>";
     $('main').append(chordContainer);
     var canvas = $('<canvas/>').attr({width: canvasWidth, height: canvasHeight}).appendTo('.chord-container');
     var context = canvas.get(0).getContext("2d");
@@ -213,7 +252,7 @@ function landingPage(size) {
     var possibleIndex = ukuApp.chordLibrary.length-1;
     var randomChordIndex = Math.floor(Math.random() * possibleIndex);
     var randomChord = ukuApp.chordLibrary[randomChordIndex].fingering;
-    drawChord(size, randomChord);
+    drawChord(size, randomChord, randomChordIndex);
 
 }
 
@@ -352,13 +391,7 @@ function toneLetter(n) {
   }
 }
 
-//---------------- create function variables to hold unicode characters ------------
 
-var add = function(n) { return '' + n; };
-var sus = function(n) { return '' + n; };
-var maj7 = function() { return '' + '7'; };
-var fdim = function() { return '' + '7'; };
-var hdim = function() { return '' + '7'; };
 
 //-------------------- get chord name with extension -------------------------
 function getChordName(chord) {
