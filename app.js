@@ -186,7 +186,9 @@ function getTonesFromFingering(fingering) {
 
 
 //---------------------- from Monika's index.js -----------------------------
-function drawChord(size, array, chordIndex) {
+function drawChord(size, chordIndex) {
+    var chord = ukuApp.chordLibrary[chordIndex];
+    var fingering = chord.fingering;
 
     //grid width and height
     var gridWidth = 150 * size;
@@ -224,23 +226,23 @@ function drawChord(size, array, chordIndex) {
     context.stroke();
 
     //draw notes
-    for (var i = 0; i < array.length; i += 1) {
+    for (var i = 0; i < fingering.length; i += 1) {
         context.beginPath();
-        if (array[i] === 0) {
+        if (fingering[i] === 0) {
             var position = (h / 2);
             context.arc(padding + (i * w), position, padding-2, 0, Math.PI*2, true);
             context.lineWidth = 3;
             context.stroke();
         }
         else {
-            var position = (h / 2) + (array[i] * h);
+            var position = (h / 2) + (fingering[i] * h);
             context.arc(padding + (i * w), position, padding-1, 0, Math.PI*2, true);
             context.fillStyle = "white";
             context.fill();
         }
     }
 
-    $('.chord-container').append(getChordName(object));
+    $('.chord-container').append(getChordName(chord));
 }
 
 
@@ -248,11 +250,9 @@ function drawChord(size, array, chordIndex) {
 function landingPage(size) {
 
     // display random chord
-    var possibleIndex = ukuApp.chordLibrary.length-1;
-    var randomChordIndex = Math.floor(Math.random() * possibleIndex);
-    var randomChord = ukuApp.chordLibrary[randomChordIndex];
-    var randomChordPos = randomChord.fingering;
-    drawChord(size, randomChordPos, randomChord);
+    var maxIndex = ukuApp.chordLibrary.length-1;
+    var randomChordIndex = Math.floor(Math.random() * maxIndex);
+    drawChord(size, randomChordIndex);
     var moreChords = "<div class='more-chords'></div>"
     $('main').append(moreChords);
 }
