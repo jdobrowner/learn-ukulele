@@ -8,183 +8,140 @@ var ukuApp = {
   },
   chordLibrary: [
     { rootNum: 0, isMinor: false, extension: '', fingering: [0,0,0,3] }, // C
-    { rootNum: 0, isMinor: false, extension: '', fingering: [0,0,0,2] }, // Cmaj7
-    { rootNum: 0, isMinor: false, extension: '', fingering: [0,0,0,0] }, // C6
+    { rootNum: 0, isMinor: false, extension: maj7(), fingering: [0,0,0,2] }, // Cmaj7
+    { rootNum: 0, isMinor: false, extension: '6', fingering: [0,0,0,0] }, // C6
     { rootNum: 0, isMinor: false, extension: '', fingering: [0,4,3,3] }, // C
-    { rootNum: 0, isMinor: false, extension: '', fingering: [2,0,3,3] }, // C6
-    { rootNum: 0, isMinor: false, extension: '', fingering: [0,0,1,3] }, // Csus4
-    { rootNum: 0, isMinor: false, extension: '', fingering: [0,0,0,1] }, // C7
-    { rootNum: 0, isMinor: false, extension: '', fingering: [3,0,0,3] }, // C7
-    { rootNum: 0, isMinor: false, extension: '', fingering: [3,4,3,3] }, // C7
+    { rootNum: 0, isMinor: false, extension: '6', fingering: [2,0,3,3] }, // C6
+    { rootNum: 0, isMinor: false, extension: sus(4), fingering: [0,0,1,3] }, // Csus4
+    { rootNum: 0, isMinor: false, extension: '7', fingering: [0,0,0,1] }, // C7
+    { rootNum: 0, isMinor: false, extension: '7', fingering: [3,0,0,3] }, // C7
+    { rootNum: 0, isMinor: false, extension: '7', fingering: [3,4,3,3] }, // C7
     { rootNum: 0, isMinor: true, extension: '', fingering: [0,3,3,3] }, // C-
-    { rootNum: 0, isMinor: true, extension: '', fingering: [3,3,3,3] }, // C-7
+    { rootNum: 0, isMinor: true, extension: '7', fingering: [3,3,3,3] }, // C-7
 
-    { rootNum: 1, isMinor: true, extension: '', fingering: [4,4,4,4] }, // C#-7
-    { rootNum: 1, isMinor: true, extension: '', fingering: [1,1,0,4] }, // C#-7
-    { rootNum: 1, isMinor: false, extension: '', fingering: [0,1,0,2] }, // C#dim7(half)
-    { rootNum: 1, isMinor: false, extension: '', fingering: [0,1,0,1] }, // C#dim7(full)
-    { rootNum: 1, isMinor: false, extension: '', fingering: [3,4,3,4] }, // C#dim7(full)
+    { rootNum: 1, isMinor: true, extension: '7', fingering: [4,4,4,4] }, // C#-7
+    { rootNum: 1, isMinor: true, extension: '7', fingering: [1,1,0,4] }, // C#-7
+    { rootNum: 1, isMinor: false, extension: hdim(), fingering: [0,1,0,2] }, // C#dim7(half)
+    { rootNum: 1, isMinor: false, extension: fdim(), fingering: [0,1,0,1] }, // C#dim7(full)
+    { rootNum: 1, isMinor: false, extension: fdim(), fingering: [3,4,3,4] }, // C#dim7(full)
 
     { rootNum: 2, isMinor: false, extension: '', fingering: [2,2,2,0] }, // D
-    { rootNum: 2, isMinor: false, extension: '', fingering: [2,2,2,4] }, // Dmaj7
-    { rootNum: 2, isMinor: false, extension: '', fingering: [2,2,2,2] }, // D6
-    { rootNum: 2, isMinor: false, extension: '', fingering: [2,2,0,0] }, // Dsus2
-    { rootNum: 2, isMinor: false, extension: '', fingering: [0,2,4,0] }, // Dsus4
-    { rootNum: 2, isMinor: false, extension: '', fingering: [2,2,2,3] }, // D7
-    { rootNum: 2, isMinor: false, extension: '', fingering: [2,2,3,3] }, // D7sus4
+    { rootNum: 2, isMinor: false, extension: maj7(), fingering: [2,2,2,4] }, // Dmaj7
+    { rootNum: 2, isMinor: false, extension: '6', fingering: [2,2,2,2] }, // D6
+    { rootNum: 2, isMinor: false, extension: sus(2), fingering: [2,2,0,0] }, // Dsus2
+    { rootNum: 2, isMinor: false, extension: sus(4), fingering: [0,2,4,0] }, // Dsus4
+    { rootNum: 2, isMinor: false, extension: '7', fingering: [2,2,2,3] }, // D7
+    { rootNum: 2, isMinor: false, extension: '7'+sus(4), fingering: [2,2,3,3] }, // D7sus4
     { rootNum: 2, isMinor: true, extension: '', fingering: [2,2,1,0] }, // D-
-    { rootNum: 2, isMinor: true, extension: '', fingering: [2,2,1,3] }, // D-7
-    { rootNum: 2, isMinor: true, extension: '', fingering: [2,2,1,2] }, // D-6
-    { rootNum: 2, isMinor: false, extension: '', fingering: [1,2,1,3] }, // Ddim7(half)
+    { rootNum: 2, isMinor: true, extension: '7', fingering: [2,2,1,3] }, // D-7
+    { rootNum: 2, isMinor: true, extension: '6', fingering: [2,2,1,2] }, // D-6
+    { rootNum: 2, isMinor: false, extension: hdim(), fingering: [1,2,1,3] }, // Ddim7(half)
 
     { rootNum: 3, isMinor: false, extension: '', fingering: [0,3,3,1] }, // Eb
     { rootNum: 3, isMinor: false, extension: '', fingering: [3,3,3,1] }, // Eb
-    { rootNum: 3, isMinor: false, extension: '', fingering: [3,3,3,3] }, // Eb6
-    { rootNum: 3, isMinor: false, extension: '', fingering: [0,3,3,1] }, // Ebadd9
-    { rootNum: 3, isMinor: false, extension: '', fingering: [3,3,4,4] }, // Ebsus2
-    { rootNum: 3, isMinor: false, extension: '', fingering: [4,4,4,0] }, // Ebadd11
+    { rootNum: 3, isMinor: false, extension: '6', fingering: [3,3,3,3] }, // Eb6
+    { rootNum: 3, isMinor: false, extension: add(9), fingering: [0,3,3,1] }, // Ebadd9
+    { rootNum: 3, isMinor: false, extension: sus(2), fingering: [3,3,4,4] }, // Ebsus2
+    { rootNum: 3, isMinor: false, extension: add(11), fingering: [4,4,4,0] }, // Ebadd11
 
-    { rootNum: 3, isMinor: false, extension: '', fingering: [2,3,2,4] }, // D#dim7(half)
-    { rootNum: 3, isMinor: false, extension: '', fingering: [2,3,2,3] }, // D#dim7(full)
+    { rootNum: 3, isMinor: false, extension: hdim(), fingering: [2,3,2,4] }, // D#dim7(half)
+    { rootNum: 3, isMinor: false, extension: fdim(), fingering: [2,3,2,3] }, // D#dim7(full)
 
     { rootNum: 4, isMinor: false, extension: '', fingering: [4,4,4,2] }, // E
-    { rootNum: 4, isMinor: false, extension: '', fingering: [4,3,4,2] }, // Emaj7
-    { rootNum: 4, isMinor: false, extension: '', fingering: [4,4,4,4] }, // E6
-    { rootNum: 4, isMinor: false, extension: '', fingering: [1,2,0,2] }, // E7
-    { rootNum: 4, isMinor: false, extension: '', fingering: [4,2,4,2] }, // E7
-    { rootNum: 4, isMinor: false, extension: '', fingering: [1,2,2,2] }, // E9
-    { rootNum: 4, isMinor: false, extension: '', fingering: [1,1,2,2] }, // E7sus4
+    { rootNum: 4, isMinor: false, extension: maj7(), fingering: [4,3,4,2] }, // Emaj7
+    { rootNum: 4, isMinor: false, extension: '6', fingering: [4,4,4,4] }, // E6
+    { rootNum: 4, isMinor: false, extension: '7', fingering: [1,2,0,2] }, // E7
+    { rootNum: 4, isMinor: false, extension: '7', fingering: [4,2,4,2] }, // E7
+    { rootNum: 4, isMinor: false, extension: '9', fingering: [1,2,2,2] }, // E9
+    { rootNum: 4, isMinor: false, extension: '7'+sus(4), fingering: [1,1,2,2] }, // E7sus4
     { rootNum: 4, isMinor: true, extension: '', fingering: [0,4,3,2] }, // E-
     { rootNum: 4, isMinor: true, extension: '', fingering: [0,4,0,2] }, // E-
-    { rootNum: 4, isMinor: true, extension: '', fingering: [0,2,0,2] }, // E-7
-    { rootNum: 4, isMinor: true, extension: '', fingering: [0,1,0,2] }, // E-6
-    { rootNum: 4, isMinor: false, extension: '', fingering: [0,2,0,1] }, // Edim7(half)
+    { rootNum: 4, isMinor: true, extension: '7', fingering: [0,2,0,2] }, // E-7
+    { rootNum: 4, isMinor: true, extension: '6', fingering: [0,1,0,2] }, // E-6
+    { rootNum: 4, isMinor: false, extension: hdim(), fingering: [0,2,0,1] }, // Edim7(half)
     { rootNum: 4, isMinor: false, extension: '', fingering: [0,4,3,1] }, // Edim
 
     { rootNum: 5, isMinor: false, extension: '', fingering: [3,0,1,0] }, // F
     { rootNum: 5, isMinor: false, extension: '', fingering: [3,0,1,3] }, // F
-    { rootNum: 5, isMinor: false, extension: '', fingering: [0,0,1,3] }, // Fsus2
-    { rootNum: 5, isMinor: false, extension: '', fingering: [3,0,1,1] }, // Fsus4
-    { rootNum: 5, isMinor: false, extension: '', fingering: [0,0,1,0] }, // Fadd9
-    { rootNum: 5, isMinor: false, extension: '', fingering: [2,3,1,3] }, // F7
+    { rootNum: 5, isMinor: false, extension: sus(2), fingering: [0,0,1,3] }, // Fsus2
+    { rootNum: 5, isMinor: false, extension: sus(4), fingering: [3,0,1,1] }, // Fsus4
+    { rootNum: 5, isMinor: false, extension: add(9), fingering: [0,0,1,0] }, // Fadd9
+    { rootNum: 5, isMinor: false, extension: '7', fingering: [2,3,1,3] }, // F7
     { rootNum: 5, isMinor: true, extension: '', fingering: [1,0,1,3] }, // F-
-    { rootNum: 5, isMinor: true, extension: '', fingering: [1,3,1,3] }, // F-7
+    { rootNum: 5, isMinor: true, extension: '7', fingering: [1,3,1,3] }, // F-7
 
     { rootNum: 6, isMinor: true, extension: '', fingering: [2,1,2,0] }, // F#-
-    { rootNum: 6, isMinor: true, extension: '', fingering: [2,4,2,4] }, //  F#-7
-    { rootNum: 6, isMinor: false, extension: '', fingering: [2,4,2,3] }, // F#dim7(half)
-    { rootNum: 6, isMinor: false, extension: '', fingering: [2,3,2,3] }, // F#dim7(full)
+    { rootNum: 6, isMinor: true, extension: '7', fingering: [2,4,2,4] }, //  F#-7
+    { rootNum: 6, isMinor: false, extension: hdim(), fingering: [2,4,2,3] }, // F#dim7(half)
+    { rootNum: 6, isMinor: false, extension: fdim(), fingering: [2,3,2,3] }, // F#dim7(full)
 
     { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,3,2] }, // G
-    { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,2,2] }, // Gmaj7
-    { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,0,2] }, // G6
-    { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,3,0] }, // Gsus2
-    { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,3,3] }, // Gsus4
-    { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,1,2] }, // G7
-    { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,1,0] }, // G7sus2
-    { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,1,3] }, // G7sus4
+    { rootNum: 7, isMinor: false, extension: maj7(), fingering: [0,2,2,2] }, // Gmaj7
+    { rootNum: 7, isMinor: false, extension: '6', fingering: [0,2,0,2] }, // G6
+    { rootNum: 7, isMinor: false, extension: sus(2), fingering: [0,2,3,0] }, // Gsus2
+    { rootNum: 7, isMinor: false, extension: sus(4), fingering: [0,2,3,3] }, // Gsus4
+    { rootNum: 7, isMinor: false, extension: '7', fingering: [0,2,1,2] }, // G7
+    { rootNum: 7, isMinor: false, extension: '7'+sus(2), fingering: [0,2,1,0] }, // G7sus2
+    { rootNum: 7, isMinor: false, extension: '7'+sus(4), fingering: [0,2,1,3] }, // G7sus4
     { rootNum: 7, isMinor: true, extension: '', fingering: [0,2,3,1] }, // G-
-    { rootNum: 7, isMinor: true, extension: '', fingering: [0,2,1,1] }, // G-7
+    { rootNum: 7, isMinor: true, extension: '7', fingering: [0,2,1,1] }, // G-7
 
     { rootNum: 8, isMinor: true, extension: '', fingering: [4,3,4,2] }, // G#-
-    { rootNum: 8, isMinor: true, extension: '', fingering: [1,3,2,2] }, // G#-7
-    { rootNum: 8, isMinor: false, extension: '', fingering: [1,2,2,2] }, // G#dim7(half)
-    { rootNum: 8, isMinor: false, extension: '', fingering: [1,2,1,2] }, // G#dim7(full)
+    { rootNum: 8, isMinor: true, extension: '7', fingering: [1,3,2,2] }, // G#-7
+    { rootNum: 8, isMinor: false, extension: hdim(), fingering: [1,2,2,2] }, // G#dim7(half)
+    { rootNum: 8, isMinor: false, extension: fdim(), fingering: [1,2,1,2] }, // G#dim7(full)
 
     { rootNum: 9, isMinor: false, extension: '', fingering: [2,3,0,0] }, // A
     { rootNum: 9, isMinor: false, extension: '', fingering: [2,3,0,4] }, // A
-    { rootNum: 9, isMinor: false, extension: '', fingering: [1,1,0,0] }, // Amaj7
-    { rootNum: 9, isMinor: false, extension: '', fingering: [2,2,0,0] }, // Asus4
-    { rootNum: 9, isMinor: false, extension: '', fingering: [2,1,0,2] }, // Aadd9
+    { rootNum: 9, isMinor: false, extension: maj7(), fingering: [1,1,0,0] }, // Amaj7
+    { rootNum: 9, isMinor: false, extension: sus(4), fingering: [2,2,0,0] }, // Asus4
+    { rootNum: 9, isMinor: false, extension: add(9), fingering: [2,1,0,2] }, // Aadd9
     { rootNum: 9, isMinor: false, extension: '', fingering: [0,1,0,0] }, // A7
-    { rootNum: 9, isMinor: false, extension: '', fingering: [0,2,0,0] }, // A7sus4
+    { rootNum: 9, isMinor: false, extension: '7'+sus(4), fingering: [0,2,0,0] }, // A7sus4
     { rootNum: 9, isMinor: true, extension: '', fingering: [2,0,0,0] }, // A-
     { rootNum: 9, isMinor: true, extension: '', fingering: [2,0,0,3] }, // A-
-    { rootNum: 9, isMinor: true, extension: '', fingering: [2,0,3,3] }, // A-7
-    { rootNum: 9, isMinor: true, extension: '', fingering: [0,0,3,0] }, // A-7
-    { rootNum: 9, isMinor: true, extension: '', fingering: [0,0,0,0] }, // A-6
-    { rootNum: 9, isMinor: true, extension: '', fingering: [0,0,1,3] }, // A-6
-    { rootNum: 9, isMinor: true, extension: '', fingering: [2,0,0,2] }, // A-add9
-    { rootNum: 9, isMinor: false, extension: '', fingering: [2,3,3,3] }, // Adim7(half)
-    { rootNum: 9, isMinor: false, extension: '', fingering: [2,3,3,0] }, // Adim7(half)
-    { rootNum: 9, isMinor: false, extension: '', fingering: [0,3,3,0] }, // Adim7(half)
+    { rootNum: 9, isMinor: true, extension: '7', fingering: [2,0,3,3] }, // A-7
+    { rootNum: 9, isMinor: true, extension: '7', fingering: [0,0,3,0] }, // A-7
+    { rootNum: 9, isMinor: true, extension: '6', fingering: [0,0,0,0] }, // A-6
+    { rootNum: 9, isMinor: true, extension: '6', fingering: [0,0,1,3] }, // A-6
+    { rootNum: 9, isMinor: true, extension: add(9), fingering: [2,0,0,2] }, // A-add9
+    { rootNum: 9, isMinor: false, extension: hdim(), fingering: [2,3,3,3] }, // Adim7(half)
+    { rootNum: 9, isMinor: false, extension: hdim(), fingering: [2,3,3,0] }, // Adim7(half)
+    { rootNum: 9, isMinor: false, extension: hdim(), fingering: [0,3,3,0] }, // Adim7(half)
 
     { rootNum: 10, isMinor: false, extension: '', fingering: [3,2,1,1] }, // Bb
-    { rootNum: 10, isMinor: false, extension: '', fingering: [3,2,1,0] }, // Bbmaj7
-    { rootNum: 10, isMinor: false, extension: '', fingering: [0,2,1,1] }, // Bb6
-    { rootNum: 10, isMinor: false, extension: '', fingering: [3,2,1,3] }, // Bbadd9
-    { rootNum: 10, isMinor: false, extension: '', fingering: [3,3,1,1] }, // Bbsus4
-    { rootNum: 10, isMinor: false, extension: '', fingering: [3,0,1,1] }, // Bbsus2
-    { rootNum: 10, isMinor: false, extension: '', fingering: [1,2,1,1] }, // Bb7
-    { rootNum: 10, isMinor: false, extension: '', fingering: [3,2,4,1] }, // Bb7
-    { rootNum: 10, isMinor: false, extension: '', fingering: [1,3,1,1] }, // Bb7sus4
-    { rootNum: 10, isMinor: false, extension: '', fingering: [3,2,4,3] }, // Bb9
+    { rootNum: 10, isMinor: false, extension: maj7(), fingering: [3,2,1,0] }, // Bbmaj7
+    { rootNum: 10, isMinor: false, extension: '6', fingering: [0,2,1,1] }, // Bb6
+    { rootNum: 10, isMinor: false, extension: add(9), fingering: [3,2,1,3] }, // Bbadd9
+    { rootNum: 10, isMinor: false, extension: sus(4), fingering: [3,3,1,1] }, // Bbsus4
+    { rootNum: 10, isMinor: false, extension: sus(2), fingering: [3,0,1,1] }, // Bbsus2
+    { rootNum: 10, isMinor: false, extension: '7', fingering: [1,2,1,1] }, // Bb7
+    { rootNum: 10, isMinor: false, extension: '7', fingering: [3,2,4,1] }, // Bb7
+    { rootNum: 10, isMinor: false, extension: '7'+sus(4), fingering: [1,3,1,1] }, // Bb7sus4
+    { rootNum: 10, isMinor: false, extension: '9', fingering: [3,2,4,3] }, // Bb9
 
     { rootNum: 11, isMinor: false, extension: '', fingering: [4,3,2,2] }, // B
-    { rootNum: 11, isMinor: false, extension: '', fingering: [4,4,2,2] }, // Bsus4
-    { rootNum: 11, isMinor: false, extension: '', fingering: [4,3,2,4] }, // Badd9
-    { rootNum: 11, isMinor: false, extension: '', fingering: [4,3,2,0] }, // B7
-    { rootNum: 11, isMinor: false, extension: '', fingering: [2,3,2,2] }, // B7
-    { rootNum: 11, isMinor: false, extension: '', fingering: [2,4,2,2] }, // B7sus4
+    { rootNum: 11, isMinor: false, extension: sus(4), fingering: [4,4,2,2] }, // Bsus4
+    { rootNum: 11, isMinor: false, extension: add(9), fingering: [4,3,2,4] }, // Badd9
+    { rootNum: 11, isMinor: false, extension: '7', fingering: [4,3,2,0] }, // B7
+    { rootNum: 11, isMinor: false, extension: '7', fingering: [2,3,2,2] }, // B7
+    { rootNum: 11, isMinor: false, extension: '7'+sus(4), fingering: [2,4,2,2] }, // B7sus4
     { rootNum: 11, isMinor: true, extension: '', fingering: [4,2,2,2] }, // B-
-    { rootNum: 11, isMinor: true, extension: '', fingering: [2,2,2,2] }, // B-7
-    { rootNum: 11, isMinor: false, extension: '', fingering: [2,2,1,2] }, // Bdim7(half)
-    { rootNum: 11, isMinor: false, extension: '', fingering: [4,2,1,0] }, // Bdim7(half)
-    { rootNum: 11, isMinor: false, extension: '', fingering: [1,2,1,2] }, // Bdim7(full)
+    { rootNum: 11, isMinor: true, extension: '7', fingering: [2,2,2,2] }, // B-7
+    { rootNum: 11, isMinor: false, extension: hdim(), fingering: [2,2,1,2] }, // Bdim7(half)
+    { rootNum: 11, isMinor: false, extension: hdim(), fingering: [4,2,1,0] }, // Bdim7(half)
+    { rootNum: 11, isMinor: false, extension: fdim(), fingering: [1,2,1,2] }, // Bdim7(full)
   ]
 };
 
 
 $(function() {
   // makeSounds();
+  landingPage(1.5);
 });
 
 /*
-function makeSounds() {
-
-    var uke1 = new Tone.Synth({
-      oscillator : {
-        'partials' : [0, 0, 0, 1, 0, 0.05]
-      },
-      envelope : {
-        attack:0.01,
-        decay:2,
-        sustain:0,
-        release:20
-      }
-      }).toMaster();
-      var uke2 = new Tone.Synth({
-        oscillator : {
-          'partials' : [0, 0, 0, 1, 0, 0.05]
-        },
-        envelope : {
-          attack:0.01,
-          decay:1.5,
-          sustain:0,
-          release:20
-        }
-        }).toMaster();
-        uke1.volume.value = -5;
-        uke2.volume.value = -5;
-    var uke3 = new Tone.PluckSynth({
-      'dampening' : 600,
-      'resonance' : 1,
-      'attackNoise' : 1
-    }).toMaster();
-    var uke4 = new Tone.PluckSynth({
-      'dampening' : 600,
-      'resonance' : 1,
-      'attackNoise' : 1
-    }).toMaster();
-
-    $('button').click( function(e) {
-      console.log('click');
-      uke1.triggerAttack(200);
-      uke2.triggerAttack(300, "+0.02");
-      //uke3.triggerAttack(1200, "+0.02");
-      //uke4.triggerAttack(1800, "+0.03");
-  });
-}
+function makeSounds() {}
 
 */
 
@@ -255,7 +212,7 @@ function landingPage(size) {
 
 }
 
-landingPage(1.5);
+
 
 
 
@@ -369,8 +326,8 @@ function displayChords(keyRoot) {
 
 //------------- map tone number to tone letter -----------------------------------
 function toneLetter(n) {
-  var sharp = '#';
-  var flat = 'b';
+  var sharp = '&#9839';
+  var flat = '&#9837';
   switch (n) {
     case 0: return 'C';
     case 1: return 'C' + sharp;
@@ -394,6 +351,14 @@ function toneLetter(n) {
 
 var add = function(n) { return '' + n; };
 var sus = function(n) { return '' + n; };
-var maj7 = function() { return ''; };
+var maj7 = function() { return '' + '7'; };
 var fdim = function() { return '' + '7'; };
 var hdim = function() { return '' + '7'; };
+
+//-------------------- get chord name with extension -------------------------
+function getChordName(chord) {
+  var name = toneLetter(chord.rootNum);
+  if (chord.isMinor === false) name += '-';
+  name += '<sup>' + chord.extension + '</sup>';
+  return name;
+}
