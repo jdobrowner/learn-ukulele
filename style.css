@@ -18,23 +18,6 @@ body {
 	height: 100%;
 }
 
-main {
-	display: flex;
-	justify-content: center;
-	font-family: "Josefin Sans";
-}
-
-.chord-container h1 {
-	font-size: 4em;
-	font-weight: 100;
-	text-align: center;
-	margin: 0;
-}
-
-h1 sup {
-	font-weight: 100;
-}
-
 nav h1 {
 	font-size: 3.5em;
 	text-align: center;
@@ -43,6 +26,28 @@ nav h1 {
 
 canvas {
 	margin: 10px;
+}
+
+main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: "Josefin Sans";
+}
+
+.chord-container h1 {
+	font-size: 5em;
+	font-weight: 300;
+	text-align: center;
+	margin: 0;
+}
+
+.more-chords {
+	width: 20px;
+	height: 80px;
+	border: 3px solid white;
+	position: relative;
+	left: 10%;
 }
 
 footer {

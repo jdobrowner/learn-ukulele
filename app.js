@@ -1,3 +1,11 @@
+//---------------- create function variables to hold unicode characters ------------
+
+var add = function(n) { return 'add' + n; };
+var sus = function(n) { return 'sus' + n; };
+var maj7 = function() { return 'maj' + '7'; };
+var fdim = function() { return 'dim' + '7'; };
+var hdim = function() { return '/dim' + '7'; };
+
 //------------ Global variable with state and chord library ------------------------
 
 var ukuApp = {
@@ -138,6 +146,7 @@ var ukuApp = {
 $(function() {
   // makeSounds();
   landingPage(1.5);
+
 });
 
 /*
@@ -147,7 +156,7 @@ function makeSounds() {}
 
 //---------------------- from Monika's index.js -----------------------------
 
-function drawChord(size, array) {
+function drawChord(size, array, object) {
 
     //grid width and height
     var gridWidth = 150 * size;
@@ -181,7 +190,7 @@ function drawChord(size, array) {
     }
 
     context.strokeStyle = "white";
-    context.lineWidth = 1;
+    context.lineWidth = 3;
     context.stroke();
 
     //draw notes
@@ -190,7 +199,7 @@ function drawChord(size, array) {
         if (array[i] === 0) {
             var position = (h / 2);
             context.arc(padding + (i * w), position, padding-2, 0, Math.PI*2, true);
-            context.lineWidth = 2;
+            context.lineWidth = 3;
             context.stroke();
         }
         else {
@@ -201,8 +210,7 @@ function drawChord(size, array) {
         }
     }
 
-    var chordName = "<h1>C–<sup>&#8743</sup></h1>"
-    $('.chord-container').append(chordName);
+    $('.chord-container').append(getChordName(object));
 }
 
 
@@ -212,11 +220,22 @@ function landingPage(size) {
     // display random chord
     var possibleIndex = ukuApp.chordLibrary.length-1;
     var randomChordIndex = Math.floor(Math.random() * possibleIndex);
-    var randomChord = ukuApp.chordLibrary[randomChordIndex].fingering;
-    drawChord(size, randomChord);
+    var randomChord = ukuApp.chordLibrary[randomChordIndex];
+    var randomChordPos = randomChord.fingering;
+    drawChord(size, randomChordPos, randomChord);
+    var moreChords = "<div class='more-chords'></div>"
+    $('main').append(moreChords);
 
 }
 
+
+//-------------------- get chord name with extension -------------------------
+function getChordName(chord) {
+  var chordName = '<h1>' + toneLetter(chord.rootNum);
+  if (chord.isMinor) chordName += '–';
+  chordName += '<sup>' + chord.extension + '</sup></h1>';
+  return chordName;
+}
 
 
 
@@ -284,7 +303,7 @@ function get5thChords(keyRoot) {
 function getAllChordsInKey(root) {
 
   var thisKey, thisScale;
-  if ( ukuleleApp.isInMajorKey ) {
+  if ( ukuApp.isInMajorKey ) {
     thisScale = majorScale(root)
     thisKey = getNthChords(thisScale);
   }
@@ -350,20 +369,4 @@ function toneLetter(n) {
     case 11: return 'B';
     default: return '';
   }
-}
-
-//---------------- create function variables to hold unicode characters ------------
-
-var add = function(n) { return '' + n; };
-var sus = function(n) { return '' + n; };
-var maj7 = function() { return '' + '7'; };
-var fdim = function() { return '' + '7'; };
-var hdim = function() { return '' + '7'; };
-
-//-------------------- get chord name with extension -------------------------
-function getChordName(chord) {
-  var name = toneLetter(chord.rootNum);
-  if (chord.isMinor === false) name += '-';
-  name += '<sup>' + chord.extension + '</sup>';
-  return name;
 }
