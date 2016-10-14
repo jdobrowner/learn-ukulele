@@ -203,10 +203,11 @@ function drawChord(size, array) {
     var paddingFromTop = gridHeight / 4;
     //size of canvas
     var canvasWidth = gridWidth + (padding * 2) + 1;
-    var canvasHeight = gridHeight + padding + paddingFromTop + 1;
+    var canvasHeight = gridHeight + paddingFromTop + 1;
 
-
-    var canvas = $('<canvas/>').attr({width: canvasWidth, height: canvasHeight}).appendTo('main');
+    var chordContainer = "<div class=chord-container></div>";
+    $('main').append(chordContainer);
+    var canvas = $('<canvas/>').attr({width: canvasWidth, height: canvasHeight}).appendTo('.chord-container');
     var context = canvas.get(0).getContext("2d");
 
 
@@ -242,7 +243,11 @@ function drawChord(size, array) {
             context.fill();
         }
     }
+
+    var chordName = "<h1>C–<sup>&#8743</sup></h1>"
+    $('.chord-container').append(chordName);
 }
+
 
 // called on initial load and when "learn:ukulele" is clicked
 function landingPage(size) {
