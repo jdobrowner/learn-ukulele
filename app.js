@@ -1,18 +1,10 @@
 //---------------- create function variables to hold unicode characters ------------
 
-<<<<<<< HEAD
-var add = function(n) { return '' + n; };
-var sus = function(n) { return '' + n; };
-var maj7 = function() { return '' + '7'; };
-var fdim = function() { return '' + '7'; };
-var hdim = function() { return '' + '7'; };
-=======
 var add = function(n) { return 'add' + n; };
 var sus = function(n) { return 'sus' + n; };
 var maj7 = function() { return 'maj' + '7'; };
 var fdim = function() { return 'dim' + '7'; };
 var hdim = function() { return '/dim' + '7'; };
->>>>>>> 0e7c19856a9d80055915b903ee31471e99ded9c1
 
 //------------ Global variable with state and chord library ------------------------
 
