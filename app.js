@@ -37,7 +37,7 @@ var ukuApp = {
     { rootNum: 2, isMinor: false, extension: maj7(), fingering: [2,2,2,4] }, // Dmaj7
     { rootNum: 2, isMinor: false, extension: '6', fingering: [2,2,2,2] }, // D6
     { rootNum: 2, isMinor: false, extension: sus(2), fingering: [2,2,0,0] }, // Dsus2
-    { rootNum: 2, isMinor: false, extension: sus(4), fingering: [0,2,4,0] }, // Dsus4
+    { rootNum: 2, isMinor: false, extension: sus(4), fingering: [0,2,3,0] }, // Dsus4
     { rootNum: 2, isMinor: false, extension: '7', fingering: [2,2,2,3] }, // D7
     { rootNum: 2, isMinor: false, extension: '7'+sus(4), fingering: [2,2,3,3] }, // D7sus4
     { rootNum: 2, isMinor: true, extension: '', fingering: [2,2,1,0] }, // D-
@@ -111,7 +111,6 @@ var ukuApp = {
     { rootNum: 9, isMinor: true, extension: '7', fingering: [2,0,3,3] }, // A-7
     { rootNum: 9, isMinor: true, extension: '7', fingering: [0,0,3,0] }, // A-7
     { rootNum: 9, isMinor: true, extension: '6', fingering: [0,0,0,0] }, // A-6
-    { rootNum: 9, isMinor: true, extension: '6', fingering: [0,0,1,3] }, // A-6
     { rootNum: 9, isMinor: true, extension: add(9), fingering: [2,0,0,2] }, // A-add9
     { rootNum: 9, isMinor: false, extension: hdim(), fingering: [2,3,3,3] }, // Adim7(half)
     { rootNum: 9, isMinor: false, extension: hdim(), fingering: [2,3,3,0] }, // Adim7(half)
@@ -146,7 +145,7 @@ var ukuApp = {
 $(function() {
   landingPage(1.5);
   makeSounds();
-
+  switchLandingPageChord();
 });
 
 
@@ -162,9 +161,9 @@ function makeSounds() {
       var harmony = getTonesFromFingering(ukuApp.chordLibrary[chordIndex].fingering);
       var now = Tone.now();
       multiPlayer.start(harmony[0], now);
-      multiPlayer.start(harmony[1], now + 0.025);
-      multiPlayer.start(harmony[2], now + 0.05);
-      multiPlayer.start(harmony[3], now + 0.075);
+      multiPlayer.start(harmony[1], now + 0.03);
+      multiPlayer.start(harmony[2], now + 0.06);
+      multiPlayer.start(harmony[3], now + 0.09);
     });
 };
 
@@ -208,13 +207,11 @@ function drawChord(size, chordIndex) {
     var canvas = $('<canvas/>').attr({width: canvasWidth, height: canvasHeight}).appendTo('.chord-container');
     var context = canvas.get(0).getContext("2d");
 
-
     //draw vertical lines
     for (var i = 0; i <= gridWidth; i += h) {
         context.moveTo(i + padding + 0.5, paddingFromTop)
         context.lineTo(i + padding + 0.5, gridHeight + paddingFromTop)
     }
-
     //draw horizontal lines
     for (var i = 0; i <= gridHeight; i += w) {
         context.moveTo(padding, i + paddingFromTop + 0.5)
@@ -255,6 +252,19 @@ function landingPage(size) {
     drawChord(size, randomChordIndex);
     var moreChords = "<div class='more-chords'></div>"
     $('main').append(moreChords);
+}
+
+function switchLandingPageChord() {
+  var $main = $('main');
+  var moreChords = "<div class='more-chords'></div>"
+  $main.on('click', '.more-chords', function(e) {
+    var maxIndex = ukuApp.chordLibrary.length-1;
+    var randomChordIndex = Math.floor(Math.random() * maxIndex);
+    $main.find('.chord-container').remove();
+    $main.find('.more-chords').remove();
+    drawChord(1.5, randomChordIndex);
+    $main.append(moreChords);
+  })
 }
 
 
