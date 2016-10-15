@@ -18,11 +18,26 @@ body {
 	height: 100%;
 }
 
-nav h1 {
+nav {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.title {
 	font-size: 3.5em;
 	text-align: center;
 	font-weight: 400;
+	cursor: pointer;
 }
+
+.chord-icon {
+	border: 3px solid white;
+	padding: 10px;
+	margin: 10px;
+	cursor: pointer;
+}
+
 
 canvas {
 	margin: 10px;
@@ -33,21 +48,84 @@ main {
 	justify-content: center;
 	align-items: center;
 	font-family: "Josefin Sans";
+	flex-wrap: wrap;
 }
 
-.chord-container h1 {
-	font-size: 5em;
+.chord-container {
+	cursor: pointer;
+	margin: 20px;
+}
+
+.pulsate {
+	-webkit-animation-name: pulsate;
+	animation-name: pulsate;
+	-webkit-animation-duration: 1.1s;
+	animation-duration: 1.1s;
+    -webkit-animation-iteration-count: infinite; 
+}
+
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(1)}
+    50% {-webkit-transform: scale(1.025)}
+    100% {-webkit-transform: scale3d(1)}
+}
+
+@keyframes pulsate {
+    0% {-webkit-transform: scale(1)}
+    50% {-webkit-transform: scale(1.025)}
+    100% {-webkit-transform: scale3d(1)}
+}
+
+.chord-name {
 	font-weight: 300;
 	text-align: center;
 	margin: 0;
 }
 
+.landing-chord {
+	font-size: 5em;
+}
+
 .more-chords {
-	width: 20px;
-	height: 80px;
-	border: 3px solid white;
 	position: relative;
 	left: 10%;
+	cursor: pointer;
+	display: inline-block;
+}
+
+.chord-menu {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	font-size: 3em;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.key, .root-note, .maj-min {
+	display: flex;
+	justify-content: space-around;
+}
+
+.key, .a, .c, .d, .e, .g, .major, .minor {
+	cursor: pointer;
+	margin: 20px;
+}
+
+.bold {
+	font-weight: 700;
+}
+
+.chord-list {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	overflow: scroll;
+	margin: 10px;
+}
+
+.chord-chord {
+	font-size: 2em;
 }
 
 footer {
