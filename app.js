@@ -146,6 +146,8 @@ $(function() {
   landingPage(1.5);
   makeSounds();
   switchLandingPageChord();
+  chordPage(0.5);
+  returnToLanding();
 });
 
 
@@ -185,9 +187,10 @@ function getTonesFromFingering(fingering) {
 
 
 //---------------------- from Monika's index.js -----------------------------
-function drawChord(size, chordIndex) {
+function drawChord(size, chordIndex, $appendTo, whichChild) {
     var chord = ukuApp.chordLibrary[chordIndex];
     var fingering = chord.fingering;
+    console.log(fingering);
 
     //grid width and height
     var gridWidth = 150 * size;
@@ -202,9 +205,9 @@ function drawChord(size, chordIndex) {
     var canvasWidth = gridWidth + (padding * 2) + 1;
     var canvasHeight = gridHeight + paddingFromTop + 1;
 
-    var chordContainer = "<div class=chord-container id=" + chordIndex + "></div>";
-    $('main').append(chordContainer);
-    var canvas = $('<canvas/>').attr({width: canvasWidth, height: canvasHeight}).appendTo('.chord-container');
+    var chordContainer = "<div class='chord-container' id='" + chordIndex + "'></div>";
+    $appendTo.append(chordContainer);
+    var canvas = $('<canvas/>').attr({width: canvasWidth, height: canvasHeight}).appendTo('.chord-container:nth-child(' + whichChild + ')');
     var context = canvas.get(0).getContext("2d");
 
     //draw vertical lines
@@ -239,7 +242,7 @@ function drawChord(size, chordIndex) {
         }
     }
 
-    $('.chord-container').append(getChordName(chord));
+    $('.chord-container:nth-child(' + whichChild + ')').append(getChordName(chord));
 }
 
 
@@ -249,9 +252,35 @@ function landingPage(size) {
     // display random chord
     var maxIndex = ukuApp.chordLibrary.length-1;
     var randomChordIndex = Math.floor(Math.random() * maxIndex);
-    drawChord(size, randomChordIndex);
+    drawChord(size, randomChordIndex, $('main'), 1);
     var moreChords = "<div class='more-chords'></div>"
     $('main').append(moreChords);
+     drawArrow(size);
+    $('.chord-name').addClass('landing-chord');
+    pulsateChord();
+}
+
+function drawArrow(size) {
+  var wide = (size * 18)+ 1;
+  var high = (size * 63) + 1;
+  var canvas = $('<canvas/>').attr({width: wide, height: high}).appendTo('.more-chords');
+    var context = canvas.get(0).getContext("2d");
+
+   context.beginPath();
+   context.moveTo(0.5, 0.5);
+   context.lineTo(wide - 2, (high / 2) - 0.5);
+   context.lineTo(0.5, high - 0.5);
+   context.lineWidth = 3;
+   context.strokeStyle = "white";
+   context.stroke(); 
+}
+
+function pulsateChord() {
+  $('main').find('.chord-container').addClass('pulsate');
+
+  $('main').on('click', '.chord-container', function(e) {
+    $('.chord-container').removeClass('pulsate');
+  });
 }
 
 function switchLandingPageChord() {
@@ -262,22 +291,51 @@ function switchLandingPageChord() {
     var randomChordIndex = Math.floor(Math.random() * maxIndex);
     $main.find('.chord-container').remove();
     $main.find('.more-chords').remove();
-    drawChord(1.5, randomChordIndex);
-    $main.append(moreChords);
+    drawChord(1.5, randomChordIndex, $('main'), 1);
+    $('.chord-name').addClass('landing-chord');
+    $('main').append(moreChords);
+   drawArrow(1.5);
   })
 }
 
 
 //-------------------- get chord name with extension -------------------------
 function getChordName(chord) {
-  var chordName = '<h1>' + toneLetter(chord.rootNum);
+  var chordName = '<h1 class="chord-name">' + toneLetter(chord.rootNum);
   if (chord.isMinor) chordName += '–';
   chordName += '<sup>' + chord.extension + '</sup></h1>';
   return chordName;
 }
 
+//--------------------------------------------load chord page on click
+function chordPage(size) {
 
 
+  $('nav').on('click', '.chord-icon', function(e) {
+
+      $('main').empty();
+
+      var chordPageMenu = "<div class='chord-menu'><div class='key'>key</div><div class='root-note'><div class='a'>A</div><div class='c bold'>C</div><div class='d'>D</div><div class='e'>E</div><div class='g'>G</div></div><div class='maj-min'><div class='major bold'>major</div><div class='minor'>minor</div></div></div>";
+      $('main').append(chordPageMenu);
+      var chordListDiv = "<div class='chord-list'></div>";
+      $('main').append(chordListDiv);
+      var chordList = $('.chord-list');
+
+      for (var i = 0; i < 9; i += 1) {
+        drawChord(size, i, chordList, i+1);
+      }
+  });
+}
+
+//--------------------------------------------return to landing page on click
+function returnToLanding() {
+
+  $('nav').on('click', '.title', function(e) {
+
+    $('main').empty();
+    landingPage(1.5);
+  });
+}
 
 //----------------------------------------------------------- final successful version of getData
 
@@ -389,8 +447,8 @@ function displayChords(keyRoot) {
 
 //------------- map tone number to tone letter -----------------------------------
 function toneLetter(n) {
-  var sharp = '&#9839';
-  var flat = '&#9837';
+  var sharp = '<span class="flat-sharp">&#9839</span>';
+  var flat = '<span class="flat-sharp">&#9837</span>';
   switch (n) {
     case 0: return 'C';
     case 1: return 'C' + sharp;
