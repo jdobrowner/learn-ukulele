@@ -99,8 +99,8 @@ var ukuApp = {
     { rootNum: 8, isMinor: false, extension: hdim(), fingering: [1,2,2,2] }, // G#dim7(half)
     { rootNum: 8, isMinor: false, extension: fdim(), fingering: [1,2,1,2] }, // G#dim7(full)
 
-    { rootNum: 9, isMinor: false, extension: '', fingering: [2,3,0,0] }, // A
-    { rootNum: 9, isMinor: false, extension: '', fingering: [2,3,0,4] }, // A
+    { rootNum: 9, isMinor: false, extension: '', fingering: [2,1,0,0] }, // A
+    { rootNum: 9, isMinor: false, extension: '', fingering: [2,1,0,4] }, // A
     { rootNum: 9, isMinor: false, extension: maj7(), fingering: [1,1,0,0] }, // Amaj7
     { rootNum: 9, isMinor: false, extension: sus(4), fingering: [2,2,0,0] }, // Asus4
     { rootNum: 9, isMinor: false, extension: add(9), fingering: [2,1,0,2] }, // Aadd9
@@ -161,9 +161,9 @@ function makeSounds() {
       var harmony = getTonesFromFingering(ukuApp.chordLibrary[chordIndex].fingering);
       var now = Tone.now();
       multiPlayer.start(harmony[0], now);
-      multiPlayer.start(harmony[1], now + 0.03);
-      multiPlayer.start(harmony[2], now + 0.06);
-      multiPlayer.start(harmony[3], now + 0.09);
+      multiPlayer.start(harmony[1], now + 0.033);
+      multiPlayer.start(harmony[2], now + 0.066);
+      multiPlayer.start(harmony[3], now + 0.099);
     });
 };
 
@@ -308,20 +308,22 @@ function displayChordSuggestions(result) {
 
 
 //------------------ get major and minor scale array for any root note ---------------------------
-function majorScale(root) { return [0,2,4,5,7,9,11].map( num => num + root ); }
-function minorScale(root) { return [0,2,3,5,7,8,10].map( num => num + root ); }
+function majorScale(root) { return [0,2,4,5,7,9,11].map( num => (num + root) % 12 ); }
+function minorScale(root) { return [0,2,3,5,7,8,10].map( num => (num + root) % 12 ); }
 
 //-------------get all chords in the library that matches a key numeral --------------------------
 function getNthChords(scale) {
   return function(numeral) {
     var n = numeral - 1;
-    var nChords = chordLibrary.filter( function(chord) {
+    var nChords = ukuApp.chordLibrary.filter( function(chord) {
       if ( chord.rootNum !== scale[n]) return false;
       for (var i = 0; i < 4; i++) {
-        if ( !scale.includes(chord.tones[i]%12)) return false;
+        if ( !scale.includes(getTonesFromFingering(chord.fingering)[i] % 12)) return false;
       }
       return true;
     });
+    //console.log('nChords = ');
+    //console.log(nChords);
     return nChords;
   }
 }
@@ -329,11 +331,15 @@ function getNthChords(scale) {
 //---------------- get all dominat chords of any key root --------------------------
 function get5thChords(keyRoot) {
   var fifth = (keyRoot + 7) % 12;
-  var fiveChords = chordLibrary.filter( function(chord) {
+  var mixolydian = majorScale(keyRoot);
+  console.log(mixolydian);
+  var fiveChords = ukuApp.chordLibrary.filter( function(chord) {
+    console.log();
     if ( chord.rootNum !== fifth) return false;
     for (var i = 0; i < 4; i++) {
-      if ( ![0,2,4,5,7,9,10].includes(chord.tones[i]%12)) return false;
+      if (!mixolydian.includes(getTonesFromFingering(chord.fingering)[i] % 12)) return false;
     }
+    return true;
   });
   return fiveChords;
 }
@@ -342,20 +348,23 @@ function get5thChords(keyRoot) {
 function getAllChordsInKey(root) {
 
   var thisKey, thisScale;
-  if ( ukuApp.isInMajorKey ) {
-    thisScale = majorScale(root)
-    thisKey = getNthChords(thisScale);
+  if ( ukuApp.isMinor ) {
+    thisScale = minorScale(root);
   }
   else {
-    thisScale = minorScale(root)
-    thisKey = getNthChords(thisScale);
+    thisScale = majorScale(root);
   }
+  thisKey = getNthChords(thisScale);
+
+  console.log('thisScale = ' + thisScale);
+  console.log(thisScale);
+  //console.log('thisKey = ' + thisKey(1));
 
   var i = thisKey(1);
   var ii = thisKey(2);
   var iii = thisKey(3);
   var iv = thisKey(4);
-  var v = get5thChords(root);
+  var v = thisKey(5);
   var vi = thisKey(6);
   var vii = thisKey(7);
   var d2 = get5thChords(thisScale[1]);
@@ -371,6 +380,9 @@ function getAllChordsInKey(root) {
 //-------------- display chords of certain numeral in key -------------------------
 function displayChords(keyRoot) {
   var chords = getAllChordsInKey(keyRoot);
+
+  console.log(keyRoot);
+  console.log(chords);
 
   console.log('I chords: ' + chords[0]);
   console.log('ii chords: ' + chords[1]);
