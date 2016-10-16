@@ -447,8 +447,8 @@ function displayChords(keyRoot) {
 
 //------------- map tone number to tone letter -----------------------------------
 function toneLetter(n) {
-  var sharp = '&#9839';
-  var flat = '&#9837';
+  var sharp = '<span class="flat-sharp">&#9839</span>';
+  var flat = '<span class="flat-sharp">&#9837</span>';
   switch (n) {
     case 0: return 'C';
     case 1: return 'C' + sharp;

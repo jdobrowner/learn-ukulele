@@ -8,6 +8,17 @@ html {
   	box-sizing: inherit;
 }
 
+* {
+
+-webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
 body {
 	color: white;
 	font-family: 'Quicksand', sans-serif;
@@ -47,8 +58,9 @@ main {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-family: "Josefin Sans";
+	/*font-family: "Josefin Sans";*/
 	flex-wrap: wrap;
+	margin: 0 20px;
 }
 
 .chord-container {
@@ -77,13 +89,20 @@ main {
 }
 
 .chord-name {
-	font-weight: 300;
+	font-weight: 400;
 	text-align: center;
 	margin: 0;
+	-webkit-margin-after: 0;
+}
+
+.flat-sharp {
+	font-size: 45px;
+	vertical-align: 5px;
+	margin: 0 -10px;
 }
 
 .landing-chord {
-	font-size: 5em;
+	font-size: 4em;
 }
 
 .more-chords {
@@ -95,19 +114,23 @@ main {
 
 .chord-menu {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	width: 100%;
 	font-size: 3em;
 	padding: 10px;
 	margin-bottom: 10px;
 }
 
-.key, .root-note, .maj-min {
+.root-note, .maj-min {
 	display: flex;
 	justify-content: space-around;
 }
 
-.key, .a, .c, .d, .e, .g, .major, .minor {
+.key {
+	margin: 20px;
+}
+
+.a, .c, .d, .e, .g, .major, .minor {
 	cursor: pointer;
 	margin: 20px;
 }
@@ -118,8 +141,8 @@ main {
 
 .chord-list {
 	display: flex;
-	justify-content: center;
-	width: 100%;
+	justify-content: flex-start;
+	flex: 1 0 100%;
 	overflow: scroll;
 	margin: 10px;
 }
