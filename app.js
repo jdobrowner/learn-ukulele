@@ -160,11 +160,7 @@ function makeSounds() {
 
     $('main').on('click', '.chord-container', function(e) {
       var chordIndex = Number($(this).attr('id'));
-<<<<<<< HEAD
-=======
-      console.log(chordIndex);
 
->>>>>>> bddb0b4498e511db7ddb839ccb6a8734a61f385c
       var harmony = getTonesFromFingering(ukuApp.chordLibrary[chordIndex].fingering);
       var now = Tone.now();
       multiPlayer.start(harmony[0], now);
