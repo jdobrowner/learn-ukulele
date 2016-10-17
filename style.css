@@ -96,13 +96,18 @@ main {
 }
 
 .flat-sharp {
-	font-size: 45px;
-	vertical-align: 5px;
-	margin: 0 -10px;
+	font-size: 43px;
+	vertical-align: 7px;
+	margin: 0 -5px;
 }
 
 .landing-chord {
-	font-size: 4em;
+	font-size: 4.5em;
+}
+
+sup {
+	font-size: 35px;
+	vertical-align: 10px;
 }
 
 .more-chords {
