@@ -143,7 +143,6 @@ var ukuApp = {
 
 //-------------------------------- on page load -----------------------------------
 $(function() {
-  assignIndexToAllChordsInLibrary();
   landingPage(1.5);
   makeSounds();
   switchLandingPageChord();
@@ -160,11 +159,7 @@ function makeSounds() {
 
     $('main').on('click', '.chord-container', function(e) {
       var chordIndex = Number($(this).attr('id'));
-<<<<<<< HEAD
-=======
       console.log(chordIndex);
-
->>>>>>> bddb0b4498e511db7ddb839ccb6a8734a61f385c
       var harmony = getTonesFromFingering(ukuApp.chordLibrary[chordIndex].fingering);
       var now = Tone.now();
       multiPlayer.start(harmony[0], now);
@@ -192,8 +187,10 @@ function getTonesFromFingering(fingering) {
 
 
 //---------------------- from Monika's index.js -----------------------------
-function drawChord(size, chordObject, $chordList) {
-    var fingering = chordObject.fingering;
+function drawChord(size, chordIndex, $appendTo, whichChild) {
+    var chord = ukuApp.chordLibrary[chordIndex];
+    var fingering = chord.fingering;
+    console.log(fingering);
 
     //grid width and height
     var gridWidth = 150 * size;
@@ -208,15 +205,9 @@ function drawChord(size, chordObject, $chordList) {
     var canvasWidth = gridWidth + (padding * 2) + 1;
     var canvasHeight = gridHeight + paddingFromTop + 1;
 
-    var chordContainer = "<div class='chord-container " + chordObject['index'] + "' id='" + chordObject['index'] + "'></div>";
-
-    $chordList.append(chordContainer);
-    var $thisChordContainer = $chordList.children('.' + chordObject['index']);
-
-    var canvas = $('<canvas/>').attr({width: canvasWidth, height: canvasHeight});
-    $thisChordContainer.append(canvas);
-
-
+    var chordContainer = "<div class='chord-container' id='" + chordIndex + "'></div>";
+    $appendTo.append(chordContainer);
+    var canvas = $('<canvas/>').attr({width: canvasWidth, height: canvasHeight}).appendTo('.chord-container:nth-child(' + whichChild + ')');
     var context = canvas.get(0).getContext("2d");
 
     //draw vertical lines
@@ -251,7 +242,7 @@ function drawChord(size, chordObject, $chordList) {
         }
     }
 
-    $thisChordContainer.append(getChordName(chordObject));
+    $('.chord-container:nth-child(' + whichChild + ')').append(getChordName(chord));
 }
 
 
@@ -261,7 +252,7 @@ function landingPage(size) {
     // display random chord
     var maxIndex = ukuApp.chordLibrary.length-1;
     var randomChordIndex = Math.floor(Math.random() * maxIndex);
-    drawChord(size, ukuApp.chordLibrary[randomChordIndex], $('main'));
+    drawChord(size, randomChordIndex, $('main'), 1);
     var moreChords = "<div class='more-chords'></div>"
     $('main').append(moreChords);
      drawArrow(size);
@@ -281,7 +272,7 @@ function drawArrow(size) {
    context.lineTo(0.5, high - 0.5);
    context.lineWidth = 3;
    context.strokeStyle = "white";
-   context.stroke();
+   context.stroke(); 
 }
 
 function pulsateChord() {
@@ -302,7 +293,7 @@ function switchLandingPageChord() {
     var randomChordIndex = Math.floor(Math.random() * maxIndex);
     $main.find('.chord-container').remove();
     $main.find('.more-chords').remove();
-    drawChord(1.5, ukuApp.chordLibrary[randomChordIndex], $('main'));
+    drawChord(1.5, randomChordIndex, $('main'), 1);
     $('.chord-name').addClass('landing-chord');
     $('main').append(moreChords);
    drawArrow(1.5);
@@ -328,8 +319,13 @@ function chordPage(size) {
 
       var chordPageMenu = "<div class='chord-menu'><div class='key'>key</div><div class='root-note'><div class='a'>A</div><div class='c bold'>C</div><div class='d'>D</div><div class='e'>E</div><div class='g'>G</div></div><div class='maj-min'><div class='major bold'>major</div><div class='minor'>minor</div></div></div>";
       $('main').append(chordPageMenu);
+      var chordListDiv = "<div class='chord-list'></div>";
+      $('main').append(chordListDiv);
+      var chordList = $('.chord-list');
 
-      displayChords(0, ukuApp.state.isInMajorKey, size);
+      for (var i = 0; i < 9; i += 1) {
+        drawChord(size, i, chordList, i+1);
+      }
   });
 }
 
@@ -367,6 +363,7 @@ $.ajax(params);
 
 function displayChordSuggestions(result) {
   var array = result.slice(0,12);
+  console.log(array);
 }
 
 
@@ -385,6 +382,8 @@ function getNthChords(scale) {
       }
       return true;
     });
+    //console.log('nChords = ');
+    //console.log(nChords);
     return nChords;
   }
 }
@@ -393,7 +392,9 @@ function getNthChords(scale) {
 function get5thChords(keyRoot) {
   var fifth = (keyRoot + 7) % 12;
   var mixolydian = majorScale(keyRoot);
+  console.log(mixolydian);
   var fiveChords = ukuApp.chordLibrary.filter( function(chord) {
+    console.log();
     if ( chord.rootNum !== fifth) return false;
     for (var i = 0; i < 4; i++) {
       if (!mixolydian.includes(getTonesFromFingering(chord.fingering)[i] % 12)) return false;
@@ -404,84 +405,58 @@ function get5thChords(keyRoot) {
 }
 
 //-------------- make a collection of all chords within a given key ------------------
-function getAllChordsInKey(root, isInMajorKey) {
+function getAllChordsInKey(root) {
 
   var thisKey, thisScale;
-  if ( isInMajorKey ) {
-    thisScale = majorScale(root);
+  if ( ukuApp.isMinor ) {
+    thisScale = minorScale(root);
   }
   else {
-    thisScale = minorScale(root);
+    thisScale = majorScale(root);
   }
   thisKey = getNthChords(thisScale);
 
-  return {
-    i : thisKey(1),
-    ii : thisKey(2),
-    iii : thisKey(3),
-    iv : thisKey(4),
-    v : thisKey(5),
-    vi : thisKey(6),
-    vii : thisKey(7),
-    d1 : get5thChords(thisScale[0]),
-    d2 : get5thChords(thisScale[1]),
-    d3 : get5thChords(thisScale[2]),
-    d4 : get5thChords(thisScale[3]),
-    d5 : get5thChords(thisScale[4]),
-    d6 : get5thChords(thisScale[5])
-  }
+  console.log('thisScale = ' + thisScale);
+  console.log(thisScale);
+  //console.log('thisKey = ' + thisKey(1));
+
+  var i = thisKey(1);
+  var ii = thisKey(2);
+  var iii = thisKey(3);
+  var iv = thisKey(4);
+  var v = thisKey(5);
+  var vi = thisKey(6);
+  var vii = thisKey(7);
+  var d2 = get5thChords(thisScale[1]);
+  var d3 = get5thChords(thisScale[2]);
+  var d4 = get5thChords(thisScale[3]);
+  var d5 = get5thChords(thisScale[4]);
+  var d6 = get5thChords(thisScale[5]);
+
+  return [i, ii, iii, iv, v, vi, vii, d2, d3, d4, d5, d6];
 }
 
 
 //-------------- display chords of certain numeral in key -------------------------
-function displayChords(keyRoot, isInMajorKey, size) {
-  var chords = getAllChordsInKey(keyRoot, isInMajorKey);
+function displayChords(keyRoot) {
+  var chords = getAllChordsInKey(keyRoot);
 
-  for (var list in chords) {
-    if (isInMajorKey && list === 'd1') continue;
-    makeChordList(list, chords[list], size, isInMajorKey);
-  }
-}
+  console.log(keyRoot);
+  console.log(chords);
 
-function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
-  var listTitle = chordFamilyTitle(chordsTitleId, chordFamily[0].rootNum, isInMajorKey);
-  var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div id='" + chordsTitleId + "' class='chord-list'></div></div>";
-  $('main').append(chordListDiv);
-  var $chordList = $('#' + chordsTitleId);
+  console.log('I chords: ' + chords[0]);
+  console.log('ii chords: ' + chords[1]);
+  console.log('iii chords: ' + chords[2]);
+  console.log('IV chords: ' + chords[3]);
+  console.log('V chords: ' + chords[4]);
+  console.log('vi chords: ' + chords[5]);
+  console.log('vii chords: ' + chords[6]);
+  console.log('D2 chords: ' + chords[7]);
+  console.log('D3 chords: ' + chords[8]);
+  console.log('D4 chords: ' + chords[9]);
+  console.log('D5 chords: ' + chords[10]);
+  console.log('D6 chords: ' + chords[11]);
 
-  for (var i = 0; i < chordFamily.length; i++) {
-    drawChord(size, chordFamily[i], $chordList);
-  }
-}
-
-function assignIndexToAllChordsInLibrary() {
-  var library = ukuApp.chordLibrary;
-  for (var i = 0; i < library.length; i++) {
-    library[i]['index'] = i;
-  }
-
-}
-
-function chordFamilyTitle(chordFamily, rootNum, isInMajorKey) {
-  var divsToAdd = '<div class="chord-family-letter">' + toneLetter(rootNum) + ' | </div><div class="chord-family-numeral">';
-  divsToAdd += isInMajorKey ? capitalizeNumeralsMajorKey(chordFamily) : capitalizeNumeralsMinorKey(chordFamily);
-  return divsToAdd;
-}
-
-function capitalizeNumeralsMajorKey(chordFamily) {
-  if ((chordFamily === 'i') || (chordFamily === 'iv') || (chordFamily === 'v')) {
-    chordFamily = chordFamily.toUpperCase();
-  }
-  if (chordFamily === 'vii') chordFamily += 'dim';
-  return chordFamily + '</div>';
-}
-
-function capitalizeNumeralsMinorKey(chordFamily) {
-  if ((chordFamily === 'iii') || (chordFamily === 'iv') || (chordFamily === 'vii')) {
-    chordFamily = chordFamily.toUpperCase();
-  }
-  if (chordFamily === 'ii') chordFamily += 'dim';
-  return chordFamily + '</div>';
 }
 
 //------------- map tone number to tone letter -----------------------------------
