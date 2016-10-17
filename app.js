@@ -3,8 +3,8 @@
 var add = function(n) { return 'add' + n; };
 var sus = function(n) { return 'sus' + n; };
 var maj7 = function() { return 'maj' + '7'; };
-var fdim = function() { return 'dim' + '7'; };
-var hdim = function() { return '/dim' + '7'; };
+var fdim = function() { return '&#120702;' + '7'; };
+var hdim = function() { return '&#248;' + '7'; };
 
 //------------ Global variable with state and chord library ------------------------
 
@@ -285,7 +285,9 @@ function pulsateChord() {
   $('main').find('.chord-container').addClass('pulsate');
 
   $('main').on('click', '.chord-container', function(e) {
-    $('.chord-container').removeClass('pulsate');
+    $(".chord-container").one('animationiteration webkitAnimationIteration', function() {
+        $('.chord-container').removeClass('pulsate');
+    });
   });
 }
 
