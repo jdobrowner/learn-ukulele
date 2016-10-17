@@ -436,14 +436,15 @@ function displayChords(keyRoot, isInMajorKey, size) {
 
   for (var list in chords) {
     if (isInMajorKey && list === 'd1') continue;
-    makeChordList(list, chords[list], size);
+    makeChordList(list, chords[list], size, isInMajorKey);
   }
 }
 
-function makeChordList(chordsTitle, chordFamily, size) {
-  var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'></div><div id='" + chordsTitle + "' class='chord-list'></div></div>";
+function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
+  var listTitle = chordFamilyTitle(chordsTitleId, chordFamily[0].rootNum, isInMajorKey);
+  var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div id='" + chordsTitleId + "' class='chord-list'></div></div>";
   $('main').append(chordListDiv);
-  var $chordList = $('#' + chordsTitle);
+  var $chordList = $('#' + chordsTitleId);
 
   for (var i = 0; i < chordFamily.length; i++) {
     drawChord(size, chordFamily[i], $chordList);
@@ -456,6 +457,28 @@ function assignIndexToAllChordsInLibrary() {
     library[i]['index'] = i;
   }
 
+}
+
+function chordFamilyTitle(chordFamily, rootNum, isInMajorKey) {
+  var divsToAdd = '<div class="chord-family-letter">' + toneLetter(rootNum) + ' | </div><div class="chord-family-numeral">';
+  divsToAdd += isInMajorKey ? capitalizeNumeralsMajorKey(chordFamily) : capitalizeNumeralsMinorKey(chordFamily);
+  return divsToAdd;
+}
+
+function capitalizeNumeralsMajorKey(chordFamily) {
+  if ((chordFamily === 'i') || (chordFamily === 'iv') || (chordFamily === 'v')) {
+    chordFamily = chordFamily.toUpperCase();
+  }
+  if (chordFamily === 'vii') chordFamily += 'dim';
+  return chordFamily + '</div>';
+}
+
+function capitalizeNumeralsMinorKey(chordFamily) {
+  if ((chordFamily === 'iii') || (chordFamily === 'iv') || (chordFamily === 'vii')) {
+    chordFamily = chordFamily.toUpperCase();
+  }
+  if (chordFamily === 'ii') chordFamily += 'dim';
+  return chordFamily + '</div>';
 }
 
 //------------- map tone number to tone letter -----------------------------------
