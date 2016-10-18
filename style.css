@@ -17,6 +17,7 @@ html {
   -ms-user-select: none;       /* Internet Explorer/Edge */
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);                                
 }
 
 body {
@@ -25,7 +26,6 @@ body {
 	font-weight: 300;
 	display: flex;
 	flex-direction: column;
-	/*justify-content: space-between;*/
 	min-height: 100vh;
 }
 
@@ -33,6 +33,8 @@ nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 60px;
+	padding-top: 20px;
 }
 
 .title {
@@ -42,11 +44,24 @@ nav {
 	cursor: pointer;
 }
 
+.chord-icon, .key-icon{
+	background: url(sprites.png) no-repeat;
+}
+
 .chord-icon {
-	border: 3px solid white;
-	padding: 10px;
-	margin: 10px;
+	background-position: 0 0;
+	width: 80px;
+	height: 75px;
+	background-size: 170%;
 	cursor: pointer;
+	margin-left: 30px;
+}
+
+.key-icon{
+	background-position: 0 -107px ;
+	width: 150px;
+	height: 30px;
+	background-size: 130%;
 }
 
 
@@ -57,7 +72,7 @@ canvas {
 main {
 	display: flex;
 	align-items: center;
-  justify-content: center;
+  	justify-content: center;
 	flex-wrap: wrap;
 }
 
@@ -115,37 +130,6 @@ main {
 	-webkit-margin-after: 0;
 }
 
-.flat-landing {
-	font-size: 65%;
-	vertical-align: 7px;
-	margin: 0 -10px;
-}
-
-.sharp-landing {
-	font-size: 60%;
-	vertical-align: 10px;
-	margin: 0 -5px;
-}
-
-.landing-chord {
-	font-size: 4.5em;
-}
-
-.half-dim-landing {
-	font-size: 60%;
-	vertical-align: 10px;
-}
-
-.full-dim-landing {
-	font-size: 60%;
-	vertical-align: 10px;
-}
-
-.sup-landing {
-	font-size: 60%;
-	vertical-align: 10px;
-}
-
 .more-chords {
   margin-left: 20px;
 	cursor: pointer;
@@ -158,21 +142,22 @@ main {
 	width: 100%;
 	font-size: 3em;
 	padding: 10px;
-	margin-bottom: 10px;
-  flex-wrap: wrap;
+	margin-bottom: 20px;
+  	flex-wrap: wrap;
+  	align-items: center;
 }
 
 .root-note, .maj-min {
 	display: flex;
 }
 
-.key {
-	margin: 20px;
-}
-
 .a, .c, .d, .e, .g, .major, .minor {
 	cursor: pointer;
 	margin: 20px;
+}
+
+.major {
+	margin-left: 50px;
 }
 
 .bold {
@@ -246,6 +231,38 @@ main {
 	font-size: 65%;
 }
 
+
+.flat-landing {
+	font-size: 65%;
+	vertical-align: 9px;
+	margin: 0 -10px;
+}
+
+.sharp-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+	margin: 0 -5px;
+}
+
+.landing-chord {
+	font-size: 4.5em;
+}
+
+.half-dim-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+}
+
+.full-dim-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+}
+
+.sup-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+}
+
 sup {
 	font-size: 60%;
 	vertical-align: 5px;
@@ -266,4 +283,10 @@ td {
 
 table {
 	padding: 0 10px;
+}
+
+@media screen and (min-width: 1500px) {
+	.chord-list-container {
+		margin-left: 15%;
+	}
 }
