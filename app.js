@@ -285,8 +285,22 @@ function pulsateChord() {
   $('main').find('.chord-container').addClass('pulsate');
 
   $('main').on('click', '.chord-container', function(e) {
-    $('.chord-container').removeClass('pulsate');
+    $(".chord-container").one('animationiteration webkitAnimationIteration', function() {
+        $('.chord-container').removeClass('pulsate');
+        pulsateArrow();
   });
+});
+}
+
+function pulsateArrow() {
+  console.log('meow');
+  $('main').find('.more-chords').addClass('pulsate-arrow');
+
+  $('main').on('click', '.more-chords', function(e) {
+    $(".more-chords").one('animationiteration webkitAnimationIteration', function() {
+        $('.more-chords').removeClass('pulsate-arrow');
+  });
+});
 }
 
 function switchLandingPageChord() {
@@ -458,7 +472,7 @@ function assignIndexToAllChordsInLibrary() {
 }
 
 function chordFamilyTitle(chordFamily, rootNum, isInMajorKey) {
-  var divsToAdd = '<div class="chord-family-letter">' + toneLetter(rootNum) + ' | </div><div class="chord-family-numeral">';
+  var divsToAdd = '<div class="chord-family-letter">' + toneLetter(rootNum) + '</div><div class="chord-family-numeral">';
   divsToAdd += isInMajorKey ? capitalizeNumeralsMajorKey(chordFamily) : capitalizeNumeralsMinorKey(chordFamily);
   return divsToAdd;
 }
