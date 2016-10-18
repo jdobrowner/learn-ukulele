@@ -109,14 +109,21 @@ main {
 
 .chord-name {
 	font-weight: 400;
+	font-size: 2.5em;
 	text-align: center;
 	margin: 0;
 	-webkit-margin-after: 0;
 }
 
-.flat-sharp {
-	font-size: 43px;
+.flat-landing {
+	font-size: 65%;
 	vertical-align: 7px;
+	margin: 0 -10px;
+}
+
+.sharp-landing {
+	font-size: 60%;
+	vertical-align: 10px;
 	margin: 0 -5px;
 }
 
@@ -124,8 +131,18 @@ main {
 	font-size: 4.5em;
 }
 
-sup {
-	font-size: 35px;
+.half-dim-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+}
+
+.full-dim-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+}
+
+.sup-landing {
+	font-size: 60%;
 	vertical-align: 10px;
 }
 
@@ -176,29 +193,62 @@ sup {
   flex-direction: column;
   justify-content: center;
   margin-right: 20px;
+  min-width: 90px;
 
 }
 
 .chord-family-letter, .chord-family-numeral {
-  font-size: 2em;
+  font-size: 3em;
   text-align: center;
 }
 
 .chord-family-numeral {
   font-family: 'Josefin Slab', serif;
+  font-size: 2em;
 
+}
+
+.flat-numeral {
+	font-size: 80%;
+	vertical-align: 3px;
+}
+
+.full-dim-numeral, .half-dim-numeral {
+	font-size: 80%;
+	padding: 0 3px;
 }
 
 .chord-list {
 	display: flex;
 	justify-content: flex-start;
-	flex: 1 0 90%;
+	flex: 1 0 85%;
 	overflow: scroll;
 	margin: 10px;
 }
 
-.chord-chord {
-	font-size: 2em;
+.sharp {
+	font-size: 60%;
+	vertical-align: 5px;
+	margin: 0 -3px;
+}
+
+.flat {
+	font-size: 60%;
+	vertical-align: 5px;
+	margin: 0 -3px;
+}
+
+.half-dim {
+	font-size: 65%;
+}
+
+.full-dim {
+	font-size: 65%;
+}
+
+sup {
+	font-size: 60%;
+	vertical-align: 5px;
 }
 
 footer {
@@ -206,12 +256,7 @@ footer {
 	justify-content: space-around;
 	flex-wrap: wrap;
 	margin-bottom: 10px;
-  margin-top: auto;
-}
-
-ul {
-	margin: 0;
-	list-style: none;
+  	margin-top: auto;
 }
 
 
