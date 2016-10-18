@@ -3,8 +3,8 @@
 var add = function(n) { return 'add' + n; };
 var sus = function(n) { return 'sus' + n; };
 var maj7 = function() { return 'maj' + '7'; };
-var fdim = function() { return 'dim' + '7'; };
-var hdim = function() { return '/dim' + '7'; };
+var fdim = function() { return '&#120702;' + '7'; };
+var hdim = function() { return '&#248;' + '7'; };
 
 //------------ Global variable with state and chord library ------------------------
 
@@ -27,6 +27,8 @@ var ukuApp = {
     { rootNum: 0, isMinor: true, extension: '', fingering: [0,3,3,3] }, // C-
     { rootNum: 0, isMinor: true, extension: '7', fingering: [3,3,3,3] }, // C-7
 
+    { rootNum: 1, isMinor: false, extension: '', fingering: [1,1,1,4] }, // C#
+    { rootNum: 1, isMinor: false, extension: '7', fingering: [1,1,1,2] }, // C#7
     { rootNum: 1, isMinor: true, extension: '7', fingering: [4,4,4,4] }, // C#-7
     { rootNum: 1, isMinor: true, extension: '7', fingering: [1,1,0,4] }, // C#-7
     { rootNum: 1, isMinor: false, extension: hdim(), fingering: [0,1,0,2] }, // C#dim7(half)
@@ -78,6 +80,8 @@ var ukuApp = {
     { rootNum: 5, isMinor: true, extension: '', fingering: [1,0,1,3] }, // F-
     { rootNum: 5, isMinor: true, extension: '7', fingering: [1,3,1,3] }, // F-7
 
+    { rootNum: 6, isMinor: false, extension: '', fingering: [3,1,2,1] }, // F#
+    { rootNum: 6, isMinor: false, extension: '7', fingering: [3,4,2,4] }, // F#7
     { rootNum: 6, isMinor: true, extension: '', fingering: [2,1,2,0] }, // F#-
     { rootNum: 6, isMinor: true, extension: '7', fingering: [2,4,2,4] }, //  F#-7
     { rootNum: 6, isMinor: false, extension: hdim(), fingering: [2,4,2,3] }, // F#dim7(half)
@@ -94,10 +98,15 @@ var ukuApp = {
     { rootNum: 7, isMinor: true, extension: '', fingering: [0,2,3,1] }, // G-
     { rootNum: 7, isMinor: true, extension: '7', fingering: [0,2,1,1] }, // G-7
 
+    { rootNum: 8, isMinor: false, extension: '7', fingering: [1,3,2,3] }, // G#7
+    { rootNum: 8, isMinor: false, extension: '7'+sus(2), fingering: [1,3,2,1] }, // G#7sus2
     { rootNum: 8, isMinor: true, extension: '', fingering: [4,3,4,2] }, // G#-
     { rootNum: 8, isMinor: true, extension: '7', fingering: [1,3,2,2] }, // G#-7
     { rootNum: 8, isMinor: false, extension: hdim(), fingering: [1,2,2,2] }, // G#dim7(half)
     { rootNum: 8, isMinor: false, extension: fdim(), fingering: [1,2,1,2] }, // G#dim7(full)
+
+    { rootNum: 8, isMinor: false, extension: maj7(), fingering: [1,3,3,3] }, // Abmaj7
+     { rootNum: 8, isMinor: false, extension: '6', fingering: [1,3,1,3] }, // Ab6
 
     { rootNum: 9, isMinor: false, extension: '', fingering: [2,1,0,0] }, // A
     { rootNum: 9, isMinor: false, extension: '', fingering: [2,1,0,4] }, // A
@@ -149,6 +158,7 @@ $(function() {
   switchLandingPageChord();
   chordPage(0.5);
   returnToLanding();
+  changeKeyButtons();
 });
 
 
@@ -160,7 +170,6 @@ function makeSounds() {
 
     $('main').on('click', '.chord-container', function(e) {
       var chordIndex = Number($(this).attr('id'));
-      console.log(chordIndex);
 
       var harmony = getTonesFromFingering(ukuApp.chordLibrary[chordIndex].fingering);
       var now = Tone.now();
@@ -287,7 +296,11 @@ function pulsateChord() {
   $('main').on('click', '.chord-container', function(e) {
     $(".chord-container").one('animationiteration webkitAnimationIteration', function() {
         $('.chord-container').removeClass('pulsate');
+<<<<<<< HEAD
         pulsateArrow();
+=======
+    });
+>>>>>>> master
   });
 });
 }
@@ -330,7 +343,6 @@ function getChordName(chord) {
 //--------------------------------------------load chord page on click
 function chordPage(size) {
 
-
   $('nav').on('click', '.chord-icon', function(e) {
 
       $('main').empty();
@@ -340,6 +352,62 @@ function chordPage(size) {
 
       displayChords(0, ukuApp.state.isInMajorKey, size);
   });
+}
+
+function changeKeyButtons() {
+  $('main').on('click', '.a', function(e) {
+    ukuApp.state.keyRoot = 9;
+    removeClassBoldAndContainers('c', 'd', 'e', 'g');
+    $(this).addClass('bold');
+    displayChords(9, ukuApp.state.isInMajorKey, 0.5);
+  });
+  $('main').on('click', '.c', function(e) {
+    ukuApp.state.keyRoot = 0;
+    removeClassBoldAndContainers('a', 'd', 'e', 'g');
+    $(this).addClass('bold');
+    displayChords(0, ukuApp.state.isInMajorKey, 0.5);
+  });
+  $('main').on('click', '.d', function(e) {
+    ukuApp.state.keyRoot = 2;
+    removeClassBoldAndContainers('a', 'c', 'e', 'g');
+    $(this).addClass('bold');
+    displayChords(2, ukuApp.state.isInMajorKey, 0.5);
+  });
+  $('main').on('click', '.e', function(e) {
+    ukuApp.state.keyRoot = 4;
+    removeClassBoldAndContainers('c', 'd', 'a', 'g');
+    $(this).addClass('bold');
+    displayChords(4, ukuApp.state.isInMajorKey, 0.5);
+  });
+  $('main').on('click', '.g', function(e) {
+    ukuApp.state.keyRoot = 7;
+    removeClassBoldAndContainers('c', 'd', 'e', 'a');
+    $(this).addClass('bold');
+    displayChords(7, ukuApp.state.isInMajorKey, 0.5);
+  });
+
+  $('main').on('click', '.major', function(e) {
+    ukuApp.state.isInMajorKey = true;
+    $(this).addClass('bold');
+    $('.minor').removeClass('bold');
+    $('.chord-list-container').remove();
+    displayChords(ukuApp.state.keyRoot, true, 0.5);
+  });
+  $('main').on('click', '.minor', function(e) {
+    ukuApp.state.isInMajorKey = false;
+    $(this).addClass('bold');
+    $('.major').removeClass('bold');
+    $('.chord-list-container').remove();
+    displayChords(ukuApp.state.keyRoot, false, 0.5);
+  });
+}
+
+function removeClassBoldAndContainers(w,x,y,z) {
+  $('.' + w ).removeClass('bold');
+  $('.' + x ).removeClass('bold');
+  $('.' + y ).removeClass('bold');
+  $('.' + z ).removeClass('bold');
+  $('.chord-list-container').remove();
 }
 
 //--------------------------------------------return to landing page on click
@@ -409,6 +477,7 @@ function get5thChords(keyRoot) {
     }
     return true;
   });
+  if (fiveChords == []) console.log('keyRoot = ' + keyRoot);
   return fiveChords;
 }
 
@@ -448,11 +517,13 @@ function displayChords(keyRoot, isInMajorKey, size) {
 
   for (var list in chords) {
     if (isInMajorKey && list === 'd1') continue;
+    if (!isInMajorKey && list === 'd2') continue;
     makeChordList(list, chords[list], size, isInMajorKey);
   }
 }
 
 function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
+  console.log(chordFamily);
   var listTitle = chordFamilyTitle(chordsTitleId, chordFamily[0].rootNum, isInMajorKey);
   var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div id='" + chordsTitleId + "' class='chord-list'></div></div>";
   $('main').append(chordListDiv);
@@ -481,16 +552,45 @@ function capitalizeNumeralsMajorKey(chordFamily) {
   if ((chordFamily === 'i') || (chordFamily === 'iv') || (chordFamily === 'v')) {
     chordFamily = chordFamily.toUpperCase();
   }
-  if (chordFamily === 'vii') chordFamily += 'dim';
+  if (chordFamily === 'vii') chordFamily += '&#120702';
+  if (chordFamily.charAt(0) === 'd') chordFamily = secondaryDominantMajorKey(chordFamily);
   return chordFamily + '</div>';
 }
 
 function capitalizeNumeralsMinorKey(chordFamily) {
-  if ((chordFamily === 'iii') || (chordFamily === 'iv') || (chordFamily === 'vii')) {
+  if ((chordFamily === 'iii') || (chordFamily === 'vi') || (chordFamily === 'vii')) {
     chordFamily = chordFamily.toUpperCase();
   }
-  if (chordFamily === 'ii') chordFamily += 'dim';
+  if ((chordFamily === 'III') || (chordFamily === 'VI') || (chordFamily === 'VII')) {
+    chordFamily = '&#9837' + chordFamily;
+  }
+  if (chordFamily === 'ii') chordFamily += '&#120702';
+  if (chordFamily.charAt(0) === 'd') chordFamily = secondaryDominantMinorKey(chordFamily);
   return chordFamily + '</div>';
+}
+
+function secondaryDominantMajorKey(chordFamily) {
+  var numeral;
+  switch (chordFamily) {
+    case 'd2': return 'V|ii';
+    case 'd3': return 'V|iii';
+    case 'd4': return 'V|IV';
+    case 'd5': return 'V|V';
+    case 'd6': return 'V|iv';
+    default: return;
+  }
+}
+
+function secondaryDominantMinorKey(chordFamily) {
+  var numeral;
+  switch (chordFamily) {
+    case 'd1': return 'V|i';
+    case 'd3': return 'V|' + '&#9837' + 'III';
+    case 'd4': return 'V|iv';
+    case 'd5': return 'V|v';
+    case 'd6': return 'V|' + '&#9837' + 'VI';
+    default: return;
+  }
 }
 
 //------------- map tone number to tone letter -----------------------------------
@@ -508,7 +608,9 @@ function toneLetter(n) {
     case 5: return 'F';
     case 6: return 'F' + sharp;
     case 7: return 'G';
-    case 8: return 'G' + sharp;
+    case 8: 
+            var letter = !ukuApp.state.isInMajorKey && (ukuApp.state.keyRoot === 0) ?  'A' + flat : 'G' + sharp;
+            return letter;
     case 9: return 'A';
     case 10: return 'B' + flat;
     case 11: return 'B';
