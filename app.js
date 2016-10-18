@@ -237,8 +237,13 @@ function drawChord(size, chordObject, $chordList) {
         context.lineTo(gridWidth + padding, i + paddingFromTop + 0.5)
     }
 
+    if (size === 1.5) {
+      context.lineWidth = 3;
+    }
+    if (size === 0.5) {
+      context.lineWidth = 2;
+    }
     context.strokeStyle = "white";
-    context.lineWidth = 3;
     context.stroke();
 
     //draw notes
@@ -247,7 +252,6 @@ function drawChord(size, chordObject, $chordList) {
         if (fingering[i] === 0) {
             var position = (h / 2);
             context.arc(padding + (i * w), position, padding-2, 0, Math.PI*2, true);
-            context.lineWidth = 3;
             context.stroke();
         }
         else {
@@ -305,7 +309,6 @@ function pulsateChord() {
 }
 
 function pulsateArrow() {
-  console.log('meow');
   $('main').find('.more-chords').addClass('pulsate-arrow');
 
   $('main').on('click', '.more-chords', function(e) {
@@ -347,7 +350,7 @@ function chordPage(size) {
 
       $('main').empty();
 
-      var chordPageMenu = "<div class='chord-menu'><div class='key'>key</div><div class='root-note'><div class='a'>A</div><div class='c bold'>C</div><div class='d'>D</div><div class='e'>E</div><div class='g'>G</div></div><div class='maj-min'><div class='major bold'>major</div><div class='minor'>minor</div></div></div>";
+      var chordPageMenu = "<div class='chord-menu'><div class='key-icon'></div><div class='root-note'><div class='a'>A</div><div class='c bold'>C</div><div class='d'>D</div><div class='e'>E</div><div class='g'>G</div></div><div class='maj-min'><div class='major bold'>major</div><div class='minor'>minor</div></div></div>";
       $('main').append(chordPageMenu);
 
       displayChords(0, ukuApp.state.isInMajorKey, size);
@@ -540,7 +543,6 @@ function displayChords(keyRoot, isInMajorKey, size) {
 }
 
 function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
-  console.log(chordFamily);
   var listTitle = chordFamilyTitle(chordsTitleId, chordFamily[0].rootNum, isInMajorKey);
   var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div id='" + chordsTitleId + "' class='chord-list'></div></div>";
   $('main').append(chordListDiv);
