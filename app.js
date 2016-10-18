@@ -296,11 +296,7 @@ function pulsateChord() {
   $('main').on('click', '.chord-container', function(e) {
     $(".chord-container").one('animationiteration webkitAnimationIteration', function() {
         $('.chord-container').removeClass('pulsate');
-<<<<<<< HEAD
         pulsateArrow();
-=======
-    });
->>>>>>> master
   });
 });
 }
@@ -608,7 +604,7 @@ function toneLetter(n) {
     case 5: return 'F';
     case 6: return 'F' + sharp;
     case 7: return 'G';
-    case 8: 
+    case 8:
             var letter = !ukuApp.state.isInMajorKey && (ukuApp.state.keyRoot === 0) ?  'A' + flat : 'G' + sharp;
             return letter;
     case 9: return 'A';
