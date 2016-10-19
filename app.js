@@ -350,7 +350,7 @@ function chordPage(size) {
 
       $('main').empty();
 
-      var chordPageMenu = "<div class='chord-menu'><div class='key-icon'></div><div class='root-note'><div class='a'>A</div><div class='c bold'>C</div><div class='d'>D</div><div class='e'>E</div><div class='g'>G</div></div><div class='maj-min'><div class='major bold'>major</div><div class='minor'>minor</div></div></div>";
+      var chordPageMenu = "<div class='chord-menu'><img src='images/key-icon.png' class='key-icon'><div class='root-note'><div class='a'>A</div><div class='c bold'>C</div><div class='d'>D</div><div class='e'>E</div><div class='g'>G</div></div><div class='maj-min'><div class='major bold'>major</div><div class='minor'>minor</div></div></div>";
       $('main').append(chordPageMenu);
 
       displayChords(0, ukuApp.state.isInMajorKey, size);
@@ -581,7 +581,7 @@ function capitalizeNumeralsMinorKey(chordFamily) {
     chordFamily = chordFamily.toUpperCase();
   }
   if ((chordFamily === 'III') || (chordFamily === 'VI') || (chordFamily === 'VII')) {
-    chordFamily = '<sup class="half-dim-numeral half-dim-landing">&#248</sup>' + chordFamily;
+    chordFamily = '<span class="flat-numeral flat-landing">&#9837</span>' + chordFamily;
   }
   if (chordFamily === 'ii') chordFamily += '<sup class="full-dim-numeral full-dim-landing">&#111</sup>';
   if (chordFamily.charAt(0) === 'd') chordFamily = secondaryDominantMinorKey(chordFamily);
@@ -604,10 +604,10 @@ function secondaryDominantMinorKey(chordFamily) {
   var numeral;
   switch (chordFamily) {
     case 'd1': return 'V | i';
-    case 'd3': return 'V | ' + '<span class="flat-numeral flat-landing">&#9837</span> ' + 'III';
+    case 'd3': return 'V | ' + '<span class="flat-numeral flat-landing">&#9837</span>' + 'III';
     case 'd4': return 'V | iv';
     case 'd5': return 'V | v';
-    case 'd6': return 'V | ' + '<span class="flat-numeral flat-landing">&#9837</span> ' + 'VI';
+    case 'd6': return 'V | ' + '<span class="flat-numeral flat-landing">&#9837</span>' + 'VI';
     default: return;
   }
 }
