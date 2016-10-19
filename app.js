@@ -13,20 +13,20 @@ var ukuApp = {
   state: {
     isInMajorKey: true, // false implies a minor key
     keyRoot: 0, // C
-    onPage: 0, // 0 = landing page, 1 = chord diagrams, 2 = progression lab
+    chordsAlreadyPlayed: []
   },
   chordLibrary: [
     { rootNum: 0, isMinor: false, extension: '', fingering: [0,0,0,3] }, // C
+    { rootNum: 0, isMinor: false, extension: '', fingering: [0,4,3,3] }, // C
     { rootNum: 0, isMinor: false, extension: maj7(), fingering: [0,0,0,2] }, // Cmaj7
     { rootNum: 0, isMinor: false, extension: number(6), fingering: [0,0,0,0] }, // C6
-    { rootNum: 0, isMinor: false, extension: '', fingering: [0,4,3,3] }, // C
     { rootNum: 0, isMinor: false, extension: number(6), fingering: [2,0,3,3] }, // C6
-    { rootNum: 0, isMinor: false, extension: sus(4), fingering: [0,0,1,3] }, // Csus4
     { rootNum: 0, isMinor: false, extension: number(7), fingering: [0,0,0,1] }, // C7
     { rootNum: 0, isMinor: false, extension: number(7), fingering: [3,0,0,3] }, // C7
     { rootNum: 0, isMinor: false, extension: number(7), fingering: [3,4,3,3] }, // C7
     { rootNum: 0, isMinor: true, extension: '', fingering: [0,3,3,3] }, // C-
     { rootNum: 0, isMinor: true, extension: number(7), fingering: [3,3,3,3] }, // C-7
+    { rootNum: 0, isMinor: false, extension: sus(4), fingering: [0,0,1,3] }, // Csus4
 
     { rootNum: 1, isMinor: false, extension: '', fingering: [1,1,1,4] }, // C#
     { rootNum: 1, isMinor: false, extension: number(7), fingering: [1,1,1,2] }, // C#7
@@ -39,21 +39,21 @@ var ukuApp = {
     { rootNum: 2, isMinor: false, extension: '', fingering: [2,2,2,0] }, // D
     { rootNum: 2, isMinor: false, extension: maj7(), fingering: [2,2,2,4] }, // Dmaj7
     { rootNum: 2, isMinor: false, extension: number(6), fingering: [2,2,2,2] }, // D6
-    { rootNum: 2, isMinor: false, extension: sus(2), fingering: [2,2,0,0] }, // Dsus2
-    { rootNum: 2, isMinor: false, extension: sus(4), fingering: [0,2,3,0] }, // Dsus4
-    { rootNum: 2, isMinor: false, extension: number(7), fingering: [2,2,2,3] }, // D7
-    { rootNum: 2, isMinor: false, extension: number(7)+sus(4), fingering: [2,2,3,3] }, // D7sus4
     { rootNum: 2, isMinor: true, extension: '', fingering: [2,2,1,0] }, // D-
     { rootNum: 2, isMinor: true, extension: number(7), fingering: [2,2,1,3] }, // D-7
     { rootNum: 2, isMinor: true, extension: number(6), fingering: [2,2,1,2] }, // D-6
     { rootNum: 2, isMinor: false, extension: hdim(), fingering: [1,2,1,3] }, // Ddim7(half)
+    { rootNum: 2, isMinor: false, extension: number(7), fingering: [2,2,2,3] }, // D7
+    { rootNum: 2, isMinor: false, extension: sus(2), fingering: [2,2,0,0] }, // Dsus2
+    { rootNum: 2, isMinor: false, extension: sus(4), fingering: [0,2,3,0] }, // Dsus4
+    { rootNum: 2, isMinor: false, extension: number(7)+sus(4), fingering: [2,2,3,3] }, // D7sus4
 
     { rootNum: 3, isMinor: false, extension: '', fingering: [0,3,3,1] }, // Eb
     { rootNum: 3, isMinor: false, extension: '', fingering: [3,3,3,1] }, // Eb
     { rootNum: 3, isMinor: false, extension: number(6), fingering: [3,3,3,3] }, // Eb6
     { rootNum: 3, isMinor: false, extension: add(9), fingering: [0,3,3,1] }, // Ebadd9
+    { rootNum: 3, isMinor: false, extension: add(11), fingering: [3,3,3,0] }, // Ebadd11 // really it's a #11
     { rootNum: 3, isMinor: false, extension: sus(2), fingering: [3,3,4,4] }, // Ebsus2
-    { rootNum: 3, isMinor: false, extension: add(11), fingering: [4,4,4,0] }, // Ebadd11
 
     { rootNum: 3, isMinor: false, extension: hdim(), fingering: [2,3,2,4] }, // D#dim7(half)
     { rootNum: 3, isMinor: false, extension: fdim(), fingering: [2,3,2,3] }, // D#dim7(full)
@@ -64,22 +64,22 @@ var ukuApp = {
     { rootNum: 4, isMinor: false, extension: number(7), fingering: [1,2,0,2] }, // E7
     { rootNum: 4, isMinor: false, extension: number(7), fingering: [4,2,4,2] }, // E7
     { rootNum: 4, isMinor: false, extension: number(9), fingering: [1,2,2,2] }, // E9
-    { rootNum: 4, isMinor: false, extension: number(7)+sus(4), fingering: [1,1,2,2] }, // E7sus4
     { rootNum: 4, isMinor: true, extension: '', fingering: [0,4,3,2] }, // E-
     { rootNum: 4, isMinor: true, extension: '', fingering: [0,4,0,2] }, // E-
     { rootNum: 4, isMinor: true, extension: number(7), fingering: [0,2,0,2] }, // E-7
     { rootNum: 4, isMinor: true, extension: number(6), fingering: [0,1,0,2] }, // E-6
     { rootNum: 4, isMinor: false, extension: hdim(), fingering: [0,2,0,1] }, // Edim7(half)
     { rootNum: 4, isMinor: false, extension: '', fingering: [0,4,3,1] }, // Edim
+    { rootNum: 4, isMinor: false, extension: number(7)+sus(4), fingering: [1,1,2,2] }, // E7sus4
 
     { rootNum: 5, isMinor: false, extension: '', fingering: [2,0,1,0] }, // F
     { rootNum: 5, isMinor: false, extension: '', fingering: [2,0,1,3] }, // F
-    { rootNum: 5, isMinor: false, extension: sus(2), fingering: [0,0,1,3] }, // Fsus2
-    { rootNum: 5, isMinor: false, extension: sus(4), fingering: [3,0,1,1] }, // Fsus4
     { rootNum: 5, isMinor: false, extension: add(9), fingering: [0,0,1,0] }, // Fadd9
     { rootNum: 5, isMinor: false, extension: number(7), fingering: [2,3,1,3] }, // F7
     { rootNum: 5, isMinor: true, extension: '', fingering: [1,0,1,3] }, // F-
     { rootNum: 5, isMinor: true, extension: number(7), fingering: [1,3,1,3] }, // F-7
+    { rootNum: 5, isMinor: false, extension: sus(2), fingering: [0,0,1,3] }, // Fsus2
+    { rootNum: 5, isMinor: false, extension: sus(4), fingering: [3,0,1,1] }, // Fsus4
 
     { rootNum: 6, isMinor: false, extension: '', fingering: [3,1,2,1] }, // F#
     { rootNum: 6, isMinor: false, extension: number(7), fingering: [3,4,2,4] }, // F#7
@@ -91,20 +91,20 @@ var ukuApp = {
     { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,3,2] }, // G
     { rootNum: 7, isMinor: false, extension: maj7(), fingering: [0,2,2,2] }, // Gmaj7
     { rootNum: 7, isMinor: false, extension: number(6), fingering: [0,2,0,2] }, // G6
-    { rootNum: 7, isMinor: false, extension: sus(2), fingering: [0,2,3,0] }, // Gsus2
-    { rootNum: 7, isMinor: false, extension: sus(4), fingering: [0,2,3,3] }, // Gsus4
     { rootNum: 7, isMinor: false, extension: number(7), fingering: [0,2,1,2] }, // G7
-    { rootNum: 7, isMinor: false, extension: number(7)+sus(2), fingering: [0,2,1,0] }, // G7sus2
-    { rootNum: 7, isMinor: false, extension: number(7)+sus(4), fingering: [0,2,1,3] }, // G7sus4
     { rootNum: 7, isMinor: true, extension: '', fingering: [0,2,3,1] }, // G-
     { rootNum: 7, isMinor: true, extension: number(7), fingering: [0,2,1,1] }, // G-7
+    { rootNum: 7, isMinor: false, extension: sus(2), fingering: [0,2,3,0] }, // Gsus2
+    { rootNum: 7, isMinor: false, extension: sus(4), fingering: [0,2,3,3] }, // Gsus4
+    { rootNum: 7, isMinor: false, extension: number(7)+sus(2), fingering: [0,2,1,0] }, // G7sus2
+    { rootNum: 7, isMinor: false, extension: number(7)+sus(4), fingering: [0,2,1,3] }, // G7sus4
 
-    { rootNum: 8, isMinor: false, extension: number(7), fingering: [1,3,2,3] }, // G#7
-    { rootNum: 8, isMinor: false, extension: number(7)+sus(2), fingering: [1,3,2,1] }, // G#7sus2
     { rootNum: 8, isMinor: true, extension: '', fingering: [4,3,4,2] }, // G#-
     { rootNum: 8, isMinor: true, extension: number(7), fingering: [1,3,2,2] }, // G#-7
     { rootNum: 8, isMinor: false, extension: hdim(), fingering: [1,2,2,2] }, // G#dim7(half)
     { rootNum: 8, isMinor: false, extension: fdim(), fingering: [1,2,1,2] }, // G#dim7(full)
+    { rootNum: 8, isMinor: false, extension: number(7), fingering: [1,3,2,3] }, // G#7
+    { rootNum: 8, isMinor: false, extension: number(7)+sus(2), fingering: [1,3,2,1] }, // G#7sus2
 
     { rootNum: 8, isMinor: false, extension: maj7(), fingering: [1,3,3,3] }, // Abmaj7
      { rootNum: 8, isMinor: false, extension: number(6), fingering: [1,3,1,3] }, // Ab6
@@ -112,10 +112,8 @@ var ukuApp = {
     { rootNum: 9, isMinor: false, extension: '', fingering: [2,1,0,0] }, // A
     { rootNum: 9, isMinor: false, extension: '', fingering: [2,1,0,4] }, // A
     { rootNum: 9, isMinor: false, extension: maj7(), fingering: [1,1,0,0] }, // Amaj7
-    { rootNum: 9, isMinor: false, extension: sus(4), fingering: [2,2,0,0] }, // Asus4
     { rootNum: 9, isMinor: false, extension: add(9), fingering: [2,1,0,2] }, // Aadd9
     { rootNum: 9, isMinor: false, extension: '', fingering: [0,1,0,0] }, // A7
-    { rootNum: 9, isMinor: false, extension: number(7)+sus(4), fingering: [0,2,0,0] }, // A7sus4
     { rootNum: 9, isMinor: true, extension: '', fingering: [2,0,0,0] }, // A-
     { rootNum: 9, isMinor: true, extension: '', fingering: [2,0,0,3] }, // A-
     { rootNum: 9, isMinor: true, extension: number(7), fingering: [2,0,3,3] }, // A-7
@@ -125,29 +123,31 @@ var ukuApp = {
     { rootNum: 9, isMinor: false, extension: hdim(), fingering: [2,3,3,3] }, // Adim7(half)
     { rootNum: 9, isMinor: false, extension: hdim(), fingering: [2,3,3,0] }, // Adim7(half)
     { rootNum: 9, isMinor: false, extension: hdim(), fingering: [0,3,3,0] }, // Adim7(half)
+    { rootNum: 9, isMinor: false, extension: sus(4), fingering: [2,2,0,0] }, // Asus4
+    { rootNum: 9, isMinor: false, extension: number(7)+sus(4), fingering: [0,2,0,0] }, // A7sus4
 
     { rootNum: 10, isMinor: false, extension: '', fingering: [3,2,1,1] }, // Bb
     { rootNum: 10, isMinor: false, extension: maj7(), fingering: [3,2,1,0] }, // Bbmaj7
     { rootNum: 10, isMinor: false, extension: number(6), fingering: [0,2,1,1] }, // Bb6
     { rootNum: 10, isMinor: false, extension: add(9), fingering: [3,2,1,3] }, // Bbadd9
-    { rootNum: 10, isMinor: false, extension: sus(4), fingering: [3,3,1,1] }, // Bbsus4
-    { rootNum: 10, isMinor: false, extension: sus(2), fingering: [3,0,1,1] }, // Bbsus2
     { rootNum: 10, isMinor: false, extension: number(7), fingering: [1,2,1,1] }, // Bb7
     { rootNum: 10, isMinor: false, extension: number(7), fingering: [3,2,4,1] }, // Bb7
-    { rootNum: 10, isMinor: false, extension: number(7)+sus(4), fingering: [1,3,1,1] }, // Bb7sus4
     { rootNum: 10, isMinor: false, extension: number(9), fingering: [3,2,4,3] }, // Bb9
+    { rootNum: 10, isMinor: false, extension: sus(2), fingering: [3,0,1,1] }, // Bbsus2
+    { rootNum: 10, isMinor: false, extension: sus(4), fingering: [3,3,1,1] }, // Bbsus4
+    { rootNum: 10, isMinor: false, extension: number(7)+sus(4), fingering: [1,3,1,1] }, // Bb7sus4
 
     { rootNum: 11, isMinor: false, extension: '', fingering: [4,3,2,2] }, // B
-    { rootNum: 11, isMinor: false, extension: sus(4), fingering: [4,4,2,2] }, // Bsus4
     { rootNum: 11, isMinor: false, extension: add(9), fingering: [4,3,2,4] }, // Badd9
     { rootNum: 11, isMinor: false, extension: number(7), fingering: [4,3,2,0] }, // B7
     { rootNum: 11, isMinor: false, extension: number(7), fingering: [2,3,2,2] }, // B7
-    { rootNum: 11, isMinor: false, extension: number(7)+sus(4), fingering: [2,4,2,2] }, // B7sus4
     { rootNum: 11, isMinor: true, extension: '', fingering: [4,2,2,2] }, // B-
     { rootNum: 11, isMinor: true, extension: number(7), fingering: [2,2,2,2] }, // B-7
     { rootNum: 11, isMinor: false, extension: hdim(), fingering: [2,2,1,2] }, // Bdim7(half)
     { rootNum: 11, isMinor: false, extension: hdim(), fingering: [4,2,1,0] }, // Bdim7(half)
     { rootNum: 11, isMinor: false, extension: fdim(), fingering: [1,2,1,2] }, // Bdim7(full)
+    { rootNum: 11, isMinor: false, extension: sus(4), fingering: [4,4,2,2] }, // Bsus4
+    { rootNum: 11, isMinor: false, extension: number(7)+sus(4), fingering: [2,4,2,2] }, // B7sus4
   ]
 };
 
@@ -271,11 +271,9 @@ function drawChord(size, chordObject, $chordList) {
 function landingPage(size) {
 
     // display random chord
-    var maxIndex = ukuApp.chordLibrary.length-1;
-    var randomChordIndex = Math.floor(Math.random() * maxIndex);
     var landingContainer = '<div class="landing-container"></div>'
     $('main').append(landingContainer);
-    drawChord(size, ukuApp.chordLibrary[randomChordIndex], $('.landing-container'));
+    drawChord(size, randomChord(), $('.landing-container'));
     var moreChords = "<div class='more-chords'></div>"
     $('.landing-container').append(moreChords);
      drawArrow(size);
@@ -326,16 +324,31 @@ function switchLandingPageChord() {
   var moreChords = "<div class='more-chords'></div>"
   var landingContainer = '<div class="landing-container"></div>'
   $main.on('click', '.more-chords', function(e) {
-    var maxIndex = ukuApp.chordLibrary.length-1;
-    var randomChordIndex = Math.floor(Math.random() * maxIndex);
     $main.empty();
      $('main').append(landingContainer);
-    drawChord(1.5, ukuApp.chordLibrary[randomChordIndex], $('.landing-container'));
+    drawChord(1.5, randomChord(), $('.landing-container'));
     $('.chord-name').addClass('landing-chord');
     $('.landing-container').append(moreChords);
     $('sup').addClass('sup-landing');
    drawArrow(1.5);
   })
+}
+
+function randomChord() {
+  var library = ukuApp.chordLibrary
+  var maxIndex = library.length-1;
+  var randomChordIndex = Math.floor(Math.random() * maxIndex);
+  var chord = library[randomChordIndex];
+  if (ukuApp.state.chordsAlreadyPlayed.includes(randomChordIndex)) {
+    if (ukuApp.state.chordsAlreadyPlayed.length > (maxIndex - 20)) {
+      console.log('cleaning up poop : ' + ukuApp.state.chordsAlreadyPlayed.length);
+      ukuApp.state.chordsAlreadyPlayed = [];
+    }
+    console.log('already played : ' + ukuApp.state.chordsAlreadyPlayed.length);
+    chord = randomChord();
+  }
+  ukuApp.state.chordsAlreadyPlayed.push(randomChordIndex);
+  return chord;
 }
 
 
@@ -368,35 +381,35 @@ function changeKeyButtons() {
     removeClassBoldAndContainers('c', 'd', 'e', 'g');
     $(this).addClass('bold');
     displayChords(9, ukuApp.state.isInMajorKey, 0.5);
-    removeLandingPageClasses(); 
+    removeLandingPageClasses();
   });
   $('main').on('click', '.c', function(e) {
     ukuApp.state.keyRoot = 0;
     removeClassBoldAndContainers('a', 'd', 'e', 'g');
     $(this).addClass('bold');
     displayChords(0, ukuApp.state.isInMajorKey, 0.5);
-    removeLandingPageClasses(); 
+    removeLandingPageClasses();
   });
   $('main').on('click', '.d', function(e) {
     ukuApp.state.keyRoot = 2;
     removeClassBoldAndContainers('a', 'c', 'e', 'g');
     $(this).addClass('bold');
     displayChords(2, ukuApp.state.isInMajorKey, 0.5);
-    removeLandingPageClasses(); 
+    removeLandingPageClasses();
   });
   $('main').on('click', '.e', function(e) {
     ukuApp.state.keyRoot = 4;
     removeClassBoldAndContainers('c', 'd', 'a', 'g');
     $(this).addClass('bold');
     displayChords(4, ukuApp.state.isInMajorKey, 0.5);
-    removeLandingPageClasses(); 
+    removeLandingPageClasses();
   });
   $('main').on('click', '.g', function(e) {
     ukuApp.state.keyRoot = 7;
     removeClassBoldAndContainers('c', 'd', 'e', 'a');
     $(this).addClass('bold');
     displayChords(7, ukuApp.state.isInMajorKey, 0.5);
-    removeLandingPageClasses(); 
+    removeLandingPageClasses();
   });
 
   $('main').on('click', '.major', function(e) {
@@ -415,7 +428,7 @@ function changeKeyButtons() {
     displayChords(ukuApp.state.keyRoot, false, 0.5);
     removeLandingPageClasses();
   });
-   
+
 }
 
 function removeLandingPageClasses() {
@@ -505,17 +518,34 @@ function get5thChords(keyRoot) {
   return fiveChords;
 }
 
+function get7thChords(keyRoot) {
+  var seventh = (keyRoot + 11) % 12;
+  var locrian = majorScale(keyRoot);
+  locrian.push((8 + keyRoot) % 12);
+  var sevenChords = ukuApp.chordLibrary.filter( function(chord) {
+    if ( chord.rootNum !== seventh) return false;
+    for (var i = 0; i < 4; i++) {
+      if (!locrian.includes(getTonesFromFingering(chord.fingering)[i] % 12)) return false;
+    }
+    return true;
+  });
+  return sevenChords;
+}
+
 //-------------- make a collection of all chords within a given key ------------------
 function getAllChordsInKey(root, isInMajorKey) {
 
-  var thisKey, thisScale;
+  var thisKey, thisScale, sevenths;
   if ( isInMajorKey ) {
     thisScale = majorScale(root);
+    sevenths = get7thChords(root);
   }
   else {
     thisScale = minorScale(root);
   }
   thisKey = getNthChords(thisScale);
+
+  var sevenths = isInMajorKey ? get7thChords(root) : thisKey(7);
 
   return {
     i : thisKey(1),
@@ -524,7 +554,7 @@ function getAllChordsInKey(root, isInMajorKey) {
     iv : thisKey(4),
     v : thisKey(5),
     vi : thisKey(6),
-    vii : thisKey(7),
+    vii : sevenths,
     d1 : get5thChords(thisScale[0]),
     d2 : get5thChords(thisScale[1]),
     d3 : get5thChords(thisScale[2]),
