@@ -12,7 +12,12 @@ var ukuApp = {
   state: {
     isInMajorKey: true, // false implies a minor key
     keyRoot: 0, // C
-    onPage: 0, // 0 = landing page, 1 = chord diagrams, 2 = progression lab
+    currentTonic: undefined, // will be filled by randomChord
+    currentProgressionNumbers: [],
+    currentProgressionRefined: [],
+    chordProgressionIndexes: [],
+    currentKey: [], // [root, major/minor]
+    stopChordSearch: false
   },
   chordLibrary: [
     { rootNum: 0, isMinor: false, extension: '', fingering: [0,0,0,3] }, // C
@@ -153,6 +158,7 @@ var ukuApp = {
 //-------------------------------- on page load -----------------------------------
 $(function() {
   assignIndexToAllChordsInLibrary();
+  makeProgression();
   landingPage(1.5);
   makeSounds();
   switchLandingPageChord();
@@ -265,9 +271,9 @@ function drawChord(size, chordObject, $chordList) {
 function landingPage(size) {
 
     // display random chord
-    var maxIndex = ukuApp.chordLibrary.length-1;
-    var randomChordIndex = Math.floor(Math.random() * maxIndex);
-    drawChord(size, ukuApp.chordLibrary[randomChordIndex], $('main'));
+    // var firstChord = getChord();
+    var firstChord = ukuApp.chordLibrary[0];
+    drawChord(size, firstChord, $('main'));
     var moreChords = "<div class='more-chords'></div>"
     $('main').append(moreChords);
      drawArrow(size);
@@ -303,7 +309,7 @@ function pulsateChord() {
 }
 
 function pulsateArrow() {
-  console.log('meow');
+
   $('main').find('.more-chords').addClass('pulsate-arrow');
 
   $('main').on('click', '.more-chords', function(e) {
@@ -317,11 +323,14 @@ function switchLandingPageChord() {
   var $main = $('main');
   var moreChords = "<div class='more-chords'></div>"
   $main.on('click', '.more-chords', function(e) {
-    var maxIndex = ukuApp.chordLibrary.length-1;
-    var randomChordIndex = Math.floor(Math.random() * maxIndex);
+    // var maxIndex = ukuApp.chordLibrary.length-1;
+    // var randomChordIndex = Math.floor(Math.random() * maxIndex);
     $main.find('.chord-container').remove();
     $main.find('.more-chords').remove();
-    drawChord(1.5, ukuApp.chordLibrary[randomChordIndex], $('main'));
+
+    //console.log('In switchLandingPageChord');
+    //console.log(ukuApp.state.currentProgression);
+    drawChord(1.5, getChord(ukuApp.state.currentProgression), $('main'));
     $('.chord-name').addClass('landing-chord');
     $('main').append(moreChords);
    drawArrow(1.5);
@@ -417,33 +426,6 @@ function returnToLanding() {
   });
 }
 
-//----------------------------------------------------------- final successful version of getData
-
-function getChordSuggestions( chordProgression ) {
-  var apikey = "2fd30e2ad4916c25122f3bb604b26d11";
-  var API_URL = "https://api.hooktheory.com/v1/";
-  var chordSuggestions = [];
-
-  var params = {
-    url: API_URL + 'trends/nodes?cp=' + chordProgression,
-    type: 'GET',
-    contentType: 'application/json',
-    dataType: 'json',
-    beforeSend: function (xhr){
-      xhr.setRequestHeader('Authorization', "Bearer " + apikey);
-    },
-    success: function(result) {
-      displayChordSuggestions(result);
-    }
-  }
-$.ajax(params);
-}
-
-function displayChordSuggestions(result) {
-  var array = result.slice(0,12);
-}
-
-
 //------------------ get major and minor scale array for any root note ---------------------------
 function majorScale(root) { return [0,2,4,5,7,9,11].map( num => (num + root) % 12 ); }
 function minorScale(root) { return [0,2,3,5,7,8,10].map( num => (num + root) % 12 ); }
@@ -474,7 +456,7 @@ function get5thChords(keyRoot) {
     }
     return true;
   });
-  if (fiveChords == []) console.log('keyRoot = ' + keyRoot);
+
   return fiveChords;
 }
 
@@ -520,7 +502,7 @@ function displayChords(keyRoot, isInMajorKey, size) {
 }
 
 function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
-  console.log(chordFamily);
+
   var listTitle = chordFamilyTitle(chordsTitleId, chordFamily[0].rootNum, isInMajorKey);
   var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div id='" + chordsTitleId + "' class='chord-list'></div></div>";
   $('main').append(chordListDiv);
@@ -613,4 +595,255 @@ function toneLetter(n) {
     case 11: return 'B';
     default: return '';
   }
+}
+
+//-------------------- make landing page chord progressions ----------------------
+/*
+function getChord(currentProgression) {
+  var progressionArray = currentProgression;
+  console.log('progressionArray, line 600');
+  console.log(progressionArray);
+
+  var chosenChord, suggestedChords;
+  if (progressionArray == undefined) {
+    progressionArray = ['1'];
+    chosenChord = randomChord();
+    ukuApp.state.currentTonic = chosenChord;
+    console.log(progressionArray);
+    return chosenChord;
+  }
+  else {
+    var progression = progressionArray.join(',');
+
+    console.log(progression);
+
+    getDataFromApi(progression);
+    console.log('In getChord else, line 616');
+    console.log(ukuApp.state.chordSuggestions);
+
+
+
+
+    // chosenNumeral = chooseChord(ukuApp.state.chordSuggestions);
+    // console.log(chosenNumeral);
+    // progressionArray.push(chosenNumeral);
+    // ukuApp.state.currentProgression = progressionArray;
+    // chosenChord = chooseChordFromNumeralFamily(chosenNumeral, ukuApp.state.currentTonic);
+    // console.log(progressionArray);
+  }
+}
+
+function randomChord() {
+  var maxIndex = ukuApp.chordLibrary.length-1;
+  var randomIndex = Math.floor( Math.random() * maxIndex );
+  chosenChord = ukuApp.chordLibrary[randomIndex];
+  if ( (chosenChord.rootNum !== 0) && (chosenChord.rootNum !== 2) && (chosenChord.rootNum !== 4) && (chosenChord.rootNum !== 7) && (chosenChord.rootNum !== 9)) {
+    chosenChord = randomChord();
+  }
+  return ukuApp.chordLibrary[randomIndex];
+}
+
+//--- choose a chord from the retrieved api data based on probabilities given ---
+
+function chooseChord(suggestedChords) {
+  console.log('In chooseChord');
+  console.log(suggestedChords[0]);
+
+  if (suggestedChords[0] == undefined) return randomChord();
+  console.log('Made it passes poop');
+
+  var probabilities = [suggestedChords[0].probability];
+  for (var i = 1; i < suggestedChords.length; i++) {
+    probabilities.push( probabilities[i-1] + probabilities[i] );
+  }
+
+  var randomNum = Math.random() * probabilities[probabilities.length-1];
+  var chosenIndex;
+  for (var j = 0; j < probabilities.length; j++) {
+    if ( randomNum < probabilities[j] ) {
+      chosenIndex = j;
+      break;
+    }
+  }
+
+  var chosenNumeral = suggestedChords[chosenIndex].chord_ID;
+  if ((chosenNumeral.charAt(0) === '5') && (chosenNumeral.charAt(1) == '/')) {
+    return chosenNumeral.substring(0,3);
+  }
+
+  return chosenNumeral.charAt(0);
+}
+
+function chooseChordFromNumeralFamily(chosenNumeral, currentTonic) {
+  var scale = [];
+  if (currentTonic.isMinor) scale = minorScale(currentTonic.rootNum);
+  else scale = majorScale(currentTonic.rootNum);
+
+  var chordFamily;
+  if (chosenNumeral.length === 1) {
+    var numeral = Number(chosenNumeral);
+    thisKey = getNthChords(scale);
+    chordFamily = thisKey(numeral);
+  }
+  else {
+    console.log('In chooseChordFromNumeralFamily');
+    console.log(chosenNumeral);
+    var numeral = Number(chosenNumeral.charAt(2));
+    chordFamily = get5thChords(scale[numeral-1]);
+  }
+
+  var random = Math.floor( Math.random() * chordFamily.length );
+  return chordFamily[random];
+}
+*/
+
+//---------------- Making a chord progression with Hooktheory --------------------
+
+function chooseFirstChord() {
+  var random = 1 + Math.floor( Math.random() * 7 );
+  ukuApp.state.currentProgressionNumbers.push(random.toString());
+  chooseKey();
+}
+
+function makeProgression() {
+  console.log(ukuApp.state.currentProgressionNumbers);
+  getDataFromApi(ukuApp.state.currentProgressionNumbers.join(','));
+}
+
+function refineNumerals(progression) {
+  var refinedProgression = progression.map( numeral => refineNumeral(numeral) )
+  ukuApp.state.currentProgressionRefined = refinedProgression;
+  console.log(ukuApp.state.currentProgressionRefined);
+}
+
+function refineNumeral(numeral) {
+  var char = numeral.charAt(0);
+  var refinedNumeral = char;
+
+  if (numeral.substring(0,2) === "5/") refinedNumeral = numeral;
+  var char = numeral.charAt(0);
+  if ((char === 'B') || (char === 'D') || (char === 'Y') || (char === 'L') || (char === 'M') || (char === 'C') || (char === 'b')) {
+    refinedNumeral = numeral.charAt(1);
+  }
+  return refinedNumeral;
+}
+
+function chooseRoot() {
+  var random = Math.floor( Math.random() * 5 );
+
+  switch (random) {
+    case 0: return 0;
+    case 1: return 2;
+    case 2: return 4;
+    case 3: return 7;
+    case 4: return 9;
+    default: return 0;
+  }
+}
+
+function chooseKey() {
+  ukuApp.state.currentKey = [chooseRoot(), Math.random() < 0.5]
+}
+
+function getChord() {
+  var state = ukuApp.state;
+  var chosenNumeral = state.currentProgressionRefined.shift();
+  console.log(chosenNumeral);
+
+  if (chosenNumeral === 'undefined') {
+    // oops
+  }
+
+  var scale = [];
+  if (state.currentKey[1]) scale = majorScale(state.currentKey[0]);
+  else scale = majorScale(state.currentKey[0]);
+
+  var chordFamily;
+  if (chosenNumeral.length === 1) {
+    var numeral = Number(chosenNumeral);
+    thisKey = getNthChords(scale);
+    chordFamily = thisKey(numeral);
+  }
+  else {
+    var numeral = Number(chosenNumeral.charAt(2));
+    chordFamily = get5thChords(scale[numeral-1]);
+  }
+
+  return chooseChordFromFamily(chordFamily);
+}
+
+function chooseChordFromFamily(family) {
+  var random = Math.floor( Math.random() * family.length );
+  var chosenChord = family[random];
+  return chosenChord;
+}
+
+//------------------ final successful version of getData ------------------------
+
+function getDataFromApi( chordProgression ) {
+  var apikey = "2fd30e2ad4916c25122f3bb604b26d11";
+  var API_URL = "https://api.hooktheory.com/v1/";
+  var chordSuggestions = [];
+
+  var params = {
+    url: API_URL + 'trends/nodes?cp=' + chordProgression,
+    type: 'GET',
+    contentType: 'application/json',
+    dataType: 'json',
+    beforeSend: function (xhr){
+      xhr.setRequestHeader('Authorization', "Bearer " + apikey);
+    },
+    success: function(result) {
+      //console.log(result);
+      returnChordProgression(result.slice(0,12));
+    },
+    error: {
+
+    }
+  }
+  $.ajax(params);
+}
+
+function returnChordProgression(result) {
+  if (typeof result[0] === 'undefined') {
+    var state = ukuApp.state;
+    refineNumerals(state.currentProgressionNumbers);
+    state.stopChordSearch = true;
+    state.currentProgressionNumbers = [];
+    chooseFirstChord();
+  }
+  else {
+    console.log(result);
+    var probabilities = [result[0].probability];
+    for (var i = 1; i < result.length; i++) {
+      probabilities.push( probabilities[i-1] + result[i].probability );
+    }
+
+    var randomNum = Math.random() * probabilities[probabilities.length-1];
+    var chosenIndex;
+    for (var j = 0; j < probabilities.length; j++) {
+      if ( randomNum < probabilities[j] ) {
+        chosenIndex = j;
+        break;
+      }
+    }
+
+    ukuApp.state.currentProgressionNumbers.push(result[chosenIndex].chord_ID);
+    makeProgression();
+}
+
+  /*
+  ukuApp.state.currentProgressionNumbers = result;
+  chosenNumeral = result;
+
+  console.log('chosenNumeral is, line 721');
+  console.log(chosenNumeral);
+
+  ukuApp.state.currentProgression.push(chosenNumeral);
+
+  console.log('ukuApp.state.currentProgression is');
+  console.log(ukuApp.state.currentProgression);
+
+  chosenChord = chooseChordFromNumeralFamily(chosenNumeral, ukuApp.state.currentTonic);
+ */
 }
