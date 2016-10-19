@@ -1,8 +1,22 @@
 html {
   	box-sizing: border-box;
-  	background-color: #a4daab;
+  	/*background-color: #09876b /*#a4daab; #4DA0B0 pink-#F29492 peach-#ff9068 beige-#eacda3*/
   	height: 100%;
+  	/*background-color: #4DA0B0;
+  	background-image: linear-gradient(to top right, #a4daab, #EECDA3);
+  	background-image: -webkit-gradient(linear, left top, right top, from(#eacda3), to(#C4E0E5));*/
+/*from(#eacda3), to(#C4E0E5) calm cool #b0c9d3 more saturated*/
+/*from(#a4daab), to(#9bc5c3) from greenish to bluish*/
+	background: #134E5E;  /*fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #134E5E , #71B280, #eacda3);  /*Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #134E5E, #71B280 ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+   
+  
 }
+
 
 *, *:before, *:after {
   	box-sizing: inherit;
@@ -17,6 +31,7 @@ html {
   -ms-user-select: none;       /* Internet Explorer/Edge */
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);                                
 }
 
 body {
@@ -25,7 +40,6 @@ body {
 	font-weight: 300;
 	display: flex;
 	flex-direction: column;
-	/*justify-content: space-between;*/
 	min-height: 100vh;
 }
 
@@ -33,6 +47,8 @@ nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 5%;
+	padding-top: 20px;
 }
 
 .title {
@@ -43,10 +59,18 @@ nav {
 }
 
 .chord-icon {
-	border: 3px solid white;
-	padding: 10px;
-	margin: 10px;
 	cursor: pointer;
+	margin-left: 15px;
+	width: 65px;
+}
+
+.chord-icon:hover {
+	width: 68px; 
+}
+
+.key-icon{
+	width: 150px;
+	height: 30px;
 }
 
 
@@ -57,7 +81,7 @@ canvas {
 main {
 	display: flex;
 	align-items: center;
-  justify-content: center;
+  	justify-content: center;
 	flex-wrap: wrap;
 }
 
@@ -109,24 +133,10 @@ main {
 
 .chord-name {
 	font-weight: 400;
+	font-size: 2.5em;
 	text-align: center;
 	margin: 0;
 	-webkit-margin-after: 0;
-}
-
-.flat-sharp {
-	font-size: 43px;
-	vertical-align: 7px;
-	margin: 0 -5px;
-}
-
-.landing-chord {
-	font-size: 4.5em;
-}
-
-sup {
-	font-size: 35px;
-	vertical-align: 10px;
 }
 
 .more-chords {
@@ -141,21 +151,22 @@ sup {
 	width: 100%;
 	font-size: 3em;
 	padding: 10px;
-	margin-bottom: 10px;
-  flex-wrap: wrap;
+	margin-bottom: 20px;
+  	flex-wrap: wrap;
+  	align-items: center;
 }
 
 .root-note, .maj-min {
 	display: flex;
 }
 
-.key {
-	margin: 20px;
-}
-
 .a, .c, .d, .e, .g, .major, .minor {
 	cursor: pointer;
 	margin: 20px;
+}
+
+.major {
+	margin-left: 50px;
 }
 
 .bold {
@@ -176,29 +187,94 @@ sup {
   flex-direction: column;
   justify-content: center;
   margin-right: 20px;
+  min-width: 90px;
 
 }
 
 .chord-family-letter, .chord-family-numeral {
-  font-size: 2em;
+  font-size: 3em;
   text-align: center;
 }
 
 .chord-family-numeral {
   font-family: 'Josefin Slab', serif;
+  font-size: 2em;
 
+}
+
+.flat-numeral {
+	font-size: 80%;
+	vertical-align: 3px;
+}
+
+.full-dim-numeral, .half-dim-numeral {
+	font-size: 80%;
+	padding: 0 3px;
 }
 
 .chord-list {
 	display: flex;
 	justify-content: flex-start;
-	flex: 1 0 90%;
+	flex: 1 0 85%;
 	overflow: scroll;
 	margin: 10px;
 }
 
-.chord-chord {
-	font-size: 2em;
+.sharp {
+	font-size: 60%;
+	vertical-align: 5px;
+	margin: 0 -3px;
+}
+
+.flat {
+	font-size: 60%;
+	vertical-align: 5px;
+	margin: 0 -3px;
+}
+
+.half-dim {
+	font-size: 65%;
+}
+
+.full-dim {
+	font-size: 65%;
+}
+
+
+.flat-landing {
+	font-size: 65%;
+	vertical-align: 9px;
+	margin: 0 -10px;
+}
+
+.sharp-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+	margin: 0 -5px;
+}
+
+.landing-chord {
+	font-size: 4.5em;
+}
+
+.half-dim-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+}
+
+.full-dim-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+}
+
+.sup-landing {
+	font-size: 60%;
+	vertical-align: 10px;
+}
+
+sup {
+	font-size: 60%;
+	vertical-align: 5px;
 }
 
 footer {
@@ -206,14 +282,14 @@ footer {
 	justify-content: space-around;
 	flex-wrap: wrap;
 	margin-bottom: 10px;
-  margin-top: auto;
+  	margin-top: auto;
 }
 
-ul {
-	margin: 0;
-	list-style: none;
+a {
+	text-decoration: none;
+	color: white;
+	cursor: pointer;
 }
-
 
 td {
 	padding: 5px;
@@ -221,4 +297,13 @@ td {
 
 table {
 	padding: 0 10px;
+}
+
+@media screen and (min-width: 1500px) {
+	.chord-list-container {
+		margin-left: 15%;
+	}
+	nav {
+		margin-bottom: 5px;
+	}
 }

@@ -1,10 +1,11 @@
 //---------------- create function variables to hold unicode characters ------------
 
-var add = function(n) { return 'add' + n; };
-var sus = function(n) { return 'sus' + n; };
-var maj7 = function() { return 'maj' + '7'; };
-var fdim = function() { return '&#120702;' + '7'; };
-var hdim = function() { return '&#248;' + '7'; };
+var add = function(n) { return '<sup class="sup-landing">add' + n + '</sup>'; };
+var sus = function(n) { return '<sup class="sup-landing">sus' + n + '</sup>'; };
+var maj7 = function() { return '<sup class="sup-landing">maj' + '7' + '</sup>'; };
+var fdim = function() { return '<sup class="full-dim-landing full-dim">&#111;</sup>' + '<sup class="sup-landing">7' + '</sup>'; };
+var hdim = function() { return '<sup class="half-dim-landing half-dim">&#248;</sup>' + '<sup class="sup-landing">7' + '</sup>'; };
+var number = function(n) { return '<sup class="sup-landing">' + n + '</sup>'; };
 
 //------------ Global variable with state and chord library ------------------------
 
@@ -17,39 +18,39 @@ var ukuApp = {
   chordLibrary: [
     { rootNum: 0, isMinor: false, extension: '', fingering: [0,0,0,3] }, // C
     { rootNum: 0, isMinor: false, extension: maj7(), fingering: [0,0,0,2] }, // Cmaj7
-    { rootNum: 0, isMinor: false, extension: '6', fingering: [0,0,0,0] }, // C6
+    { rootNum: 0, isMinor: false, extension: number(6), fingering: [0,0,0,0] }, // C6
     { rootNum: 0, isMinor: false, extension: '', fingering: [0,4,3,3] }, // C
-    { rootNum: 0, isMinor: false, extension: '6', fingering: [2,0,3,3] }, // C6
+    { rootNum: 0, isMinor: false, extension: number(6), fingering: [2,0,3,3] }, // C6
     { rootNum: 0, isMinor: false, extension: sus(4), fingering: [0,0,1,3] }, // Csus4
-    { rootNum: 0, isMinor: false, extension: '7', fingering: [0,0,0,1] }, // C7
-    { rootNum: 0, isMinor: false, extension: '7', fingering: [3,0,0,3] }, // C7
-    { rootNum: 0, isMinor: false, extension: '7', fingering: [3,4,3,3] }, // C7
+    { rootNum: 0, isMinor: false, extension: number(7), fingering: [0,0,0,1] }, // C7
+    { rootNum: 0, isMinor: false, extension: number(7), fingering: [3,0,0,3] }, // C7
+    { rootNum: 0, isMinor: false, extension: number(7), fingering: [3,4,3,3] }, // C7
     { rootNum: 0, isMinor: true, extension: '', fingering: [0,3,3,3] }, // C-
-    { rootNum: 0, isMinor: true, extension: '7', fingering: [3,3,3,3] }, // C-7
+    { rootNum: 0, isMinor: true, extension: number(7), fingering: [3,3,3,3] }, // C-7
 
     { rootNum: 1, isMinor: false, extension: '', fingering: [1,1,1,4] }, // C#
-    { rootNum: 1, isMinor: false, extension: '7', fingering: [1,1,1,2] }, // C#7
-    { rootNum: 1, isMinor: true, extension: '7', fingering: [4,4,4,4] }, // C#-7
-    { rootNum: 1, isMinor: true, extension: '7', fingering: [1,1,0,4] }, // C#-7
+    { rootNum: 1, isMinor: false, extension: number(7), fingering: [1,1,1,2] }, // C#7
+    { rootNum: 1, isMinor: true, extension: number(7), fingering: [4,4,4,4] }, // C#-7
+    { rootNum: 1, isMinor: true, extension: number(7), fingering: [1,1,0,4] }, // C#-7
     { rootNum: 1, isMinor: false, extension: hdim(), fingering: [0,1,0,2] }, // C#dim7(half)
     { rootNum: 1, isMinor: false, extension: fdim(), fingering: [0,1,0,1] }, // C#dim7(full)
     { rootNum: 1, isMinor: false, extension: fdim(), fingering: [3,4,3,4] }, // C#dim7(full)
 
     { rootNum: 2, isMinor: false, extension: '', fingering: [2,2,2,0] }, // D
     { rootNum: 2, isMinor: false, extension: maj7(), fingering: [2,2,2,4] }, // Dmaj7
-    { rootNum: 2, isMinor: false, extension: '6', fingering: [2,2,2,2] }, // D6
+    { rootNum: 2, isMinor: false, extension: number(6), fingering: [2,2,2,2] }, // D6
     { rootNum: 2, isMinor: false, extension: sus(2), fingering: [2,2,0,0] }, // Dsus2
     { rootNum: 2, isMinor: false, extension: sus(4), fingering: [0,2,3,0] }, // Dsus4
-    { rootNum: 2, isMinor: false, extension: '7', fingering: [2,2,2,3] }, // D7
-    { rootNum: 2, isMinor: false, extension: '7'+sus(4), fingering: [2,2,3,3] }, // D7sus4
+    { rootNum: 2, isMinor: false, extension: number(7), fingering: [2,2,2,3] }, // D7
+    { rootNum: 2, isMinor: false, extension: number(7)+sus(4), fingering: [2,2,3,3] }, // D7sus4
     { rootNum: 2, isMinor: true, extension: '', fingering: [2,2,1,0] }, // D-
-    { rootNum: 2, isMinor: true, extension: '7', fingering: [2,2,1,3] }, // D-7
-    { rootNum: 2, isMinor: true, extension: '6', fingering: [2,2,1,2] }, // D-6
+    { rootNum: 2, isMinor: true, extension: number(7), fingering: [2,2,1,3] }, // D-7
+    { rootNum: 2, isMinor: true, extension: number(6), fingering: [2,2,1,2] }, // D-6
     { rootNum: 2, isMinor: false, extension: hdim(), fingering: [1,2,1,3] }, // Ddim7(half)
 
     { rootNum: 3, isMinor: false, extension: '', fingering: [0,3,3,1] }, // Eb
     { rootNum: 3, isMinor: false, extension: '', fingering: [3,3,3,1] }, // Eb
-    { rootNum: 3, isMinor: false, extension: '6', fingering: [3,3,3,3] }, // Eb6
+    { rootNum: 3, isMinor: false, extension: number(6), fingering: [3,3,3,3] }, // Eb6
     { rootNum: 3, isMinor: false, extension: add(9), fingering: [0,3,3,1] }, // Ebadd9
     { rootNum: 3, isMinor: false, extension: sus(2), fingering: [3,3,4,4] }, // Ebsus2
     { rootNum: 3, isMinor: false, extension: add(11), fingering: [4,4,4,0] }, // Ebadd11
@@ -59,15 +60,15 @@ var ukuApp = {
 
     { rootNum: 4, isMinor: false, extension: '', fingering: [4,4,4,2] }, // E
     { rootNum: 4, isMinor: false, extension: maj7(), fingering: [4,3,4,2] }, // Emaj7
-    { rootNum: 4, isMinor: false, extension: '6', fingering: [4,4,4,4] }, // E6
-    { rootNum: 4, isMinor: false, extension: '7', fingering: [1,2,0,2] }, // E7
-    { rootNum: 4, isMinor: false, extension: '7', fingering: [4,2,4,2] }, // E7
-    { rootNum: 4, isMinor: false, extension: '9', fingering: [1,2,2,2] }, // E9
-    { rootNum: 4, isMinor: false, extension: '7'+sus(4), fingering: [1,1,2,2] }, // E7sus4
+    { rootNum: 4, isMinor: false, extension: number(6), fingering: [4,4,4,4] }, // E6
+    { rootNum: 4, isMinor: false, extension: number(7), fingering: [1,2,0,2] }, // E7
+    { rootNum: 4, isMinor: false, extension: number(7), fingering: [4,2,4,2] }, // E7
+    { rootNum: 4, isMinor: false, extension: number(9), fingering: [1,2,2,2] }, // E9
+    { rootNum: 4, isMinor: false, extension: number(7)+sus(4), fingering: [1,1,2,2] }, // E7sus4
     { rootNum: 4, isMinor: true, extension: '', fingering: [0,4,3,2] }, // E-
     { rootNum: 4, isMinor: true, extension: '', fingering: [0,4,0,2] }, // E-
-    { rootNum: 4, isMinor: true, extension: '7', fingering: [0,2,0,2] }, // E-7
-    { rootNum: 4, isMinor: true, extension: '6', fingering: [0,1,0,2] }, // E-6
+    { rootNum: 4, isMinor: true, extension: number(7), fingering: [0,2,0,2] }, // E-7
+    { rootNum: 4, isMinor: true, extension: number(6), fingering: [0,1,0,2] }, // E-6
     { rootNum: 4, isMinor: false, extension: hdim(), fingering: [0,2,0,1] }, // Edim7(half)
     { rootNum: 4, isMinor: false, extension: '', fingering: [0,4,3,1] }, // Edim
 
@@ -76,37 +77,37 @@ var ukuApp = {
     { rootNum: 5, isMinor: false, extension: sus(2), fingering: [0,0,1,3] }, // Fsus2
     { rootNum: 5, isMinor: false, extension: sus(4), fingering: [3,0,1,1] }, // Fsus4
     { rootNum: 5, isMinor: false, extension: add(9), fingering: [0,0,1,0] }, // Fadd9
-    { rootNum: 5, isMinor: false, extension: '7', fingering: [2,3,1,3] }, // F7
+    { rootNum: 5, isMinor: false, extension: number(7), fingering: [2,3,1,3] }, // F7
     { rootNum: 5, isMinor: true, extension: '', fingering: [1,0,1,3] }, // F-
-    { rootNum: 5, isMinor: true, extension: '7', fingering: [1,3,1,3] }, // F-7
+    { rootNum: 5, isMinor: true, extension: number(7), fingering: [1,3,1,3] }, // F-7
 
     { rootNum: 6, isMinor: false, extension: '', fingering: [3,1,2,1] }, // F#
-    { rootNum: 6, isMinor: false, extension: '7', fingering: [3,4,2,4] }, // F#7
+    { rootNum: 6, isMinor: false, extension: number(7), fingering: [3,4,2,4] }, // F#7
     { rootNum: 6, isMinor: true, extension: '', fingering: [2,1,2,0] }, // F#-
-    { rootNum: 6, isMinor: true, extension: '7', fingering: [2,4,2,4] }, //  F#-7
+    { rootNum: 6, isMinor: true, extension: number(7), fingering: [2,4,2,4] }, //  F#-7
     { rootNum: 6, isMinor: false, extension: hdim(), fingering: [2,4,2,3] }, // F#dim7(half)
     { rootNum: 6, isMinor: false, extension: fdim(), fingering: [2,3,2,3] }, // F#dim7(full)
 
     { rootNum: 7, isMinor: false, extension: '', fingering: [0,2,3,2] }, // G
     { rootNum: 7, isMinor: false, extension: maj7(), fingering: [0,2,2,2] }, // Gmaj7
-    { rootNum: 7, isMinor: false, extension: '6', fingering: [0,2,0,2] }, // G6
+    { rootNum: 7, isMinor: false, extension: number(6), fingering: [0,2,0,2] }, // G6
     { rootNum: 7, isMinor: false, extension: sus(2), fingering: [0,2,3,0] }, // Gsus2
     { rootNum: 7, isMinor: false, extension: sus(4), fingering: [0,2,3,3] }, // Gsus4
-    { rootNum: 7, isMinor: false, extension: '7', fingering: [0,2,1,2] }, // G7
-    { rootNum: 7, isMinor: false, extension: '7'+sus(2), fingering: [0,2,1,0] }, // G7sus2
-    { rootNum: 7, isMinor: false, extension: '7'+sus(4), fingering: [0,2,1,3] }, // G7sus4
+    { rootNum: 7, isMinor: false, extension: number(7), fingering: [0,2,1,2] }, // G7
+    { rootNum: 7, isMinor: false, extension: number(7)+sus(2), fingering: [0,2,1,0] }, // G7sus2
+    { rootNum: 7, isMinor: false, extension: number(7)+sus(4), fingering: [0,2,1,3] }, // G7sus4
     { rootNum: 7, isMinor: true, extension: '', fingering: [0,2,3,1] }, // G-
-    { rootNum: 7, isMinor: true, extension: '7', fingering: [0,2,1,1] }, // G-7
+    { rootNum: 7, isMinor: true, extension: number(7), fingering: [0,2,1,1] }, // G-7
 
-    { rootNum: 8, isMinor: false, extension: '7', fingering: [1,3,2,3] }, // G#7
-    { rootNum: 8, isMinor: false, extension: '7'+sus(2), fingering: [1,3,2,1] }, // G#7sus2
+    { rootNum: 8, isMinor: false, extension: number(7), fingering: [1,3,2,3] }, // G#7
+    { rootNum: 8, isMinor: false, extension: number(7)+sus(2), fingering: [1,3,2,1] }, // G#7sus2
     { rootNum: 8, isMinor: true, extension: '', fingering: [4,3,4,2] }, // G#-
-    { rootNum: 8, isMinor: true, extension: '7', fingering: [1,3,2,2] }, // G#-7
+    { rootNum: 8, isMinor: true, extension: number(7), fingering: [1,3,2,2] }, // G#-7
     { rootNum: 8, isMinor: false, extension: hdim(), fingering: [1,2,2,2] }, // G#dim7(half)
     { rootNum: 8, isMinor: false, extension: fdim(), fingering: [1,2,1,2] }, // G#dim7(full)
 
     { rootNum: 8, isMinor: false, extension: maj7(), fingering: [1,3,3,3] }, // Abmaj7
-     { rootNum: 8, isMinor: false, extension: '6', fingering: [1,3,1,3] }, // Ab6
+     { rootNum: 8, isMinor: false, extension: number(6), fingering: [1,3,1,3] }, // Ab6
 
     { rootNum: 9, isMinor: false, extension: '', fingering: [2,1,0,0] }, // A
     { rootNum: 9, isMinor: false, extension: '', fingering: [2,1,0,4] }, // A
@@ -114,12 +115,12 @@ var ukuApp = {
     { rootNum: 9, isMinor: false, extension: sus(4), fingering: [2,2,0,0] }, // Asus4
     { rootNum: 9, isMinor: false, extension: add(9), fingering: [2,1,0,2] }, // Aadd9
     { rootNum: 9, isMinor: false, extension: '', fingering: [0,1,0,0] }, // A7
-    { rootNum: 9, isMinor: false, extension: '7'+sus(4), fingering: [0,2,0,0] }, // A7sus4
+    { rootNum: 9, isMinor: false, extension: number(7)+sus(4), fingering: [0,2,0,0] }, // A7sus4
     { rootNum: 9, isMinor: true, extension: '', fingering: [2,0,0,0] }, // A-
     { rootNum: 9, isMinor: true, extension: '', fingering: [2,0,0,3] }, // A-
-    { rootNum: 9, isMinor: true, extension: '7', fingering: [2,0,3,3] }, // A-7
-    { rootNum: 9, isMinor: true, extension: '7', fingering: [0,0,3,0] }, // A-7
-    { rootNum: 9, isMinor: true, extension: '6', fingering: [0,0,0,0] }, // A-6
+    { rootNum: 9, isMinor: true, extension: number(7), fingering: [2,0,3,3] }, // A-7
+    { rootNum: 9, isMinor: true, extension: number(7), fingering: [0,0,3,0] }, // A-7
+    { rootNum: 9, isMinor: true, extension: number(6), fingering: [0,0,0,0] }, // A-6
     { rootNum: 9, isMinor: true, extension: add(9), fingering: [2,0,0,2] }, // A-add9
     { rootNum: 9, isMinor: false, extension: hdim(), fingering: [2,3,3,3] }, // Adim7(half)
     { rootNum: 9, isMinor: false, extension: hdim(), fingering: [2,3,3,0] }, // Adim7(half)
@@ -127,23 +128,23 @@ var ukuApp = {
 
     { rootNum: 10, isMinor: false, extension: '', fingering: [3,2,1,1] }, // Bb
     { rootNum: 10, isMinor: false, extension: maj7(), fingering: [3,2,1,0] }, // Bbmaj7
-    { rootNum: 10, isMinor: false, extension: '6', fingering: [0,2,1,1] }, // Bb6
+    { rootNum: 10, isMinor: false, extension: number(6), fingering: [0,2,1,1] }, // Bb6
     { rootNum: 10, isMinor: false, extension: add(9), fingering: [3,2,1,3] }, // Bbadd9
     { rootNum: 10, isMinor: false, extension: sus(4), fingering: [3,3,1,1] }, // Bbsus4
     { rootNum: 10, isMinor: false, extension: sus(2), fingering: [3,0,1,1] }, // Bbsus2
-    { rootNum: 10, isMinor: false, extension: '7', fingering: [1,2,1,1] }, // Bb7
-    { rootNum: 10, isMinor: false, extension: '7', fingering: [3,2,4,1] }, // Bb7
-    { rootNum: 10, isMinor: false, extension: '7'+sus(4), fingering: [1,3,1,1] }, // Bb7sus4
-    { rootNum: 10, isMinor: false, extension: '9', fingering: [3,2,4,3] }, // Bb9
+    { rootNum: 10, isMinor: false, extension: number(7), fingering: [1,2,1,1] }, // Bb7
+    { rootNum: 10, isMinor: false, extension: number(7), fingering: [3,2,4,1] }, // Bb7
+    { rootNum: 10, isMinor: false, extension: number(7)+sus(4), fingering: [1,3,1,1] }, // Bb7sus4
+    { rootNum: 10, isMinor: false, extension: number(9), fingering: [3,2,4,3] }, // Bb9
 
     { rootNum: 11, isMinor: false, extension: '', fingering: [4,3,2,2] }, // B
     { rootNum: 11, isMinor: false, extension: sus(4), fingering: [4,4,2,2] }, // Bsus4
     { rootNum: 11, isMinor: false, extension: add(9), fingering: [4,3,2,4] }, // Badd9
-    { rootNum: 11, isMinor: false, extension: '7', fingering: [4,3,2,0] }, // B7
-    { rootNum: 11, isMinor: false, extension: '7', fingering: [2,3,2,2] }, // B7
-    { rootNum: 11, isMinor: false, extension: '7'+sus(4), fingering: [2,4,2,2] }, // B7sus4
+    { rootNum: 11, isMinor: false, extension: number(7), fingering: [4,3,2,0] }, // B7
+    { rootNum: 11, isMinor: false, extension: number(7), fingering: [2,3,2,2] }, // B7
+    { rootNum: 11, isMinor: false, extension: number(7)+sus(4), fingering: [2,4,2,2] }, // B7sus4
     { rootNum: 11, isMinor: true, extension: '', fingering: [4,2,2,2] }, // B-
-    { rootNum: 11, isMinor: true, extension: '7', fingering: [2,2,2,2] }, // B-7
+    { rootNum: 11, isMinor: true, extension: number(7), fingering: [2,2,2,2] }, // B-7
     { rootNum: 11, isMinor: false, extension: hdim(), fingering: [2,2,1,2] }, // Bdim7(half)
     { rootNum: 11, isMinor: false, extension: hdim(), fingering: [4,2,1,0] }, // Bdim7(half)
     { rootNum: 11, isMinor: false, extension: fdim(), fingering: [1,2,1,2] }, // Bdim7(full)
@@ -206,7 +207,7 @@ function drawChord(size, chordObject, $chordList) {
     var gridHeight = 200 * size;
     //line segment size
     var w = gridWidth / 3;
-    var h = gridHeight / 4;
+    var h = (gridHeight / 4);
     //padding around grid
     var padding = h / 3;
     var paddingFromTop = gridHeight / 4;
@@ -227,17 +228,22 @@ function drawChord(size, chordObject, $chordList) {
 
     //draw vertical lines
     for (var i = 0; i <= gridWidth; i += h) {
-        context.moveTo(i + padding + 0.5, paddingFromTop)
-        context.lineTo(i + padding + 0.5, gridHeight + paddingFromTop)
+        context.moveTo(i + padding, paddingFromTop - size)
+        context.lineTo(i + padding , gridHeight + paddingFromTop + 1)
     }
     //draw horizontal lines
     for (var i = 0; i <= gridHeight; i += w) {
-        context.moveTo(padding, i + paddingFromTop + 0.5)
-        context.lineTo(gridWidth + padding, i + paddingFromTop + 0.5)
+        context.moveTo(padding, i + paddingFromTop)
+        context.lineTo(gridWidth + padding, i + paddingFromTop)
     }
 
+    if (size === 1.5) {
+      context.lineWidth = 3;
+    }
+    if (size === 0.5) {
+      context.lineWidth = 2;
+    }
     context.strokeStyle = "white";
-    context.lineWidth = 3;
     context.stroke();
 
     //draw notes
@@ -246,7 +252,6 @@ function drawChord(size, chordObject, $chordList) {
         if (fingering[i] === 0) {
             var position = (h / 2);
             context.arc(padding + (i * w), position, padding-2, 0, Math.PI*2, true);
-            context.lineWidth = 3;
             context.stroke();
         }
         else {
@@ -272,6 +277,7 @@ function landingPage(size) {
     $('main').append(moreChords);
      drawArrow(size);
     $('.chord-name').addClass('landing-chord');
+    $('sup').addClass('sup-landing');
     pulsateChord();
 }
 
@@ -303,7 +309,6 @@ function pulsateChord() {
 }
 
 function pulsateArrow() {
-  console.log('meow');
   $('main').find('.more-chords').addClass('pulsate-arrow');
 
   $('main').on('click', '.more-chords', function(e) {
@@ -324,6 +329,7 @@ function switchLandingPageChord() {
     drawChord(1.5, ukuApp.chordLibrary[randomChordIndex], $('main'));
     $('.chord-name').addClass('landing-chord');
     $('main').append(moreChords);
+    $('sup').addClass('sup-landing');
    drawArrow(1.5);
   })
 }
@@ -333,7 +339,7 @@ function switchLandingPageChord() {
 function getChordName(chord) {
   var chordName = '<h1 class="chord-name">' + toneLetter(chord.rootNum);
   if (chord.isMinor) chordName += '–';
-  chordName += '<sup>' + chord.extension + '</sup></h1>';
+  chordName += chord.extension + '</h1>';
   return chordName;
 }
 
@@ -344,10 +350,11 @@ function chordPage(size) {
 
       $('main').empty();
 
-      var chordPageMenu = "<div class='chord-menu'><div class='key'>key</div><div class='root-note'><div class='a'>A</div><div class='c bold'>C</div><div class='d'>D</div><div class='e'>E</div><div class='g'>G</div></div><div class='maj-min'><div class='major bold'>major</div><div class='minor'>minor</div></div></div>";
+      var chordPageMenu = "<div class='chord-menu'><div class='key-icon'></div><div class='root-note'><div class='a'>A</div><div class='c bold'>C</div><div class='d'>D</div><div class='e'>E</div><div class='g'>G</div></div><div class='maj-min'><div class='major bold'>major</div><div class='minor'>minor</div></div></div>";
       $('main').append(chordPageMenu);
 
       displayChords(0, ukuApp.state.isInMajorKey, size);
+      removeLandingPageClasses();
   });
 }
 
@@ -357,30 +364,35 @@ function changeKeyButtons() {
     removeClassBoldAndContainers('c', 'd', 'e', 'g');
     $(this).addClass('bold');
     displayChords(9, ukuApp.state.isInMajorKey, 0.5);
+    removeLandingPageClasses(); 
   });
   $('main').on('click', '.c', function(e) {
     ukuApp.state.keyRoot = 0;
     removeClassBoldAndContainers('a', 'd', 'e', 'g');
     $(this).addClass('bold');
     displayChords(0, ukuApp.state.isInMajorKey, 0.5);
+    removeLandingPageClasses(); 
   });
   $('main').on('click', '.d', function(e) {
     ukuApp.state.keyRoot = 2;
     removeClassBoldAndContainers('a', 'c', 'e', 'g');
     $(this).addClass('bold');
     displayChords(2, ukuApp.state.isInMajorKey, 0.5);
+    removeLandingPageClasses(); 
   });
   $('main').on('click', '.e', function(e) {
     ukuApp.state.keyRoot = 4;
     removeClassBoldAndContainers('c', 'd', 'a', 'g');
     $(this).addClass('bold');
     displayChords(4, ukuApp.state.isInMajorKey, 0.5);
+    removeLandingPageClasses(); 
   });
   $('main').on('click', '.g', function(e) {
     ukuApp.state.keyRoot = 7;
     removeClassBoldAndContainers('c', 'd', 'e', 'a');
     $(this).addClass('bold');
     displayChords(7, ukuApp.state.isInMajorKey, 0.5);
+    removeLandingPageClasses(); 
   });
 
   $('main').on('click', '.major', function(e) {
@@ -389,6 +401,7 @@ function changeKeyButtons() {
     $('.minor').removeClass('bold');
     $('.chord-list-container').remove();
     displayChords(ukuApp.state.keyRoot, true, 0.5);
+    removeLandingPageClasses();
   });
   $('main').on('click', '.minor', function(e) {
     ukuApp.state.isInMajorKey = false;
@@ -396,7 +409,17 @@ function changeKeyButtons() {
     $('.major').removeClass('bold');
     $('.chord-list-container').remove();
     displayChords(ukuApp.state.keyRoot, false, 0.5);
+    removeLandingPageClasses();
   });
+   
+}
+
+function removeLandingPageClasses() {
+  $('span').removeClass('sharp-landing');
+  $('span').removeClass('flat-landing');
+  $('sup').removeClass('half-dim-landing');
+  $('sup').removeClass('full-dim-landing');
+  $('sup').removeClass('sup-landing');
 }
 
 function removeClassBoldAndContainers(w,x,y,z) {
@@ -520,7 +543,6 @@ function displayChords(keyRoot, isInMajorKey, size) {
 }
 
 function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
-  console.log(chordFamily);
   var listTitle = chordFamilyTitle(chordsTitleId, chordFamily[0].rootNum, isInMajorKey);
   var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div id='" + chordsTitleId + "' class='chord-list'></div></div>";
   $('main').append(chordListDiv);
@@ -549,7 +571,7 @@ function capitalizeNumeralsMajorKey(chordFamily) {
   if ((chordFamily === 'i') || (chordFamily === 'iv') || (chordFamily === 'v')) {
     chordFamily = chordFamily.toUpperCase();
   }
-  if (chordFamily === 'vii') chordFamily += '&#120702';
+  if (chordFamily === 'vii') chordFamily += '<sup class="full-dim-numeral full-dim-landing">&#111</sup>';
   if (chordFamily.charAt(0) === 'd') chordFamily = secondaryDominantMajorKey(chordFamily);
   return chordFamily + '</div>';
 }
@@ -559,9 +581,9 @@ function capitalizeNumeralsMinorKey(chordFamily) {
     chordFamily = chordFamily.toUpperCase();
   }
   if ((chordFamily === 'III') || (chordFamily === 'VI') || (chordFamily === 'VII')) {
-    chordFamily = '&#9837' + chordFamily;
+    chordFamily = '<sup class="half-dim-numeral half-dim-landing">&#248</sup>' + chordFamily;
   }
-  if (chordFamily === 'ii') chordFamily += '&#120702';
+  if (chordFamily === 'ii') chordFamily += '<sup class="full-dim-numeral full-dim-landing">&#111</sup>';
   if (chordFamily.charAt(0) === 'd') chordFamily = secondaryDominantMinorKey(chordFamily);
   return chordFamily + '</div>';
 }
@@ -569,11 +591,11 @@ function capitalizeNumeralsMinorKey(chordFamily) {
 function secondaryDominantMajorKey(chordFamily) {
   var numeral;
   switch (chordFamily) {
-    case 'd2': return 'V|ii';
-    case 'd3': return 'V|iii';
-    case 'd4': return 'V|IV';
-    case 'd5': return 'V|V';
-    case 'd6': return 'V|iv';
+    case 'd2': return 'V | ii';
+    case 'd3': return 'V | iii';
+    case 'd4': return 'V | IV';
+    case 'd5': return 'V | V';
+    case 'd6': return 'V | iv';
     default: return;
   }
 }
@@ -581,19 +603,19 @@ function secondaryDominantMajorKey(chordFamily) {
 function secondaryDominantMinorKey(chordFamily) {
   var numeral;
   switch (chordFamily) {
-    case 'd1': return 'V|i';
-    case 'd3': return 'V|' + '&#9837' + 'III';
-    case 'd4': return 'V|iv';
-    case 'd5': return 'V|v';
-    case 'd6': return 'V|' + '&#9837' + 'VI';
+    case 'd1': return 'V | i';
+    case 'd3': return 'V | ' + '<span class="flat-numeral flat-landing">&#9837</span> ' + 'III';
+    case 'd4': return 'V | iv';
+    case 'd5': return 'V | v';
+    case 'd6': return 'V | ' + '<span class="flat-numeral flat-landing">&#9837</span> ' + 'VI';
     default: return;
   }
 }
 
 //------------- map tone number to tone letter -----------------------------------
 function toneLetter(n) {
-  var sharp = '<span class="flat-sharp">&#9839</span>';
-  var flat = '<span class="flat-sharp">&#9837</span>';
+  var sharp = '<span class="sharp sharp-landing">&#9839</span>';
+  var flat = '<span class="flat flat-landing">&#9837</span>';
   switch (n) {
     case 0: return 'C';
     case 1: return 'C' + sharp;
