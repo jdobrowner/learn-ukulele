@@ -1,9 +1,9 @@
 html {
   	box-sizing: border-box;
   	height: 100%;
-	background: #134E5E;  /*fallback for old browsers */
-	background: -webkit-linear-gradient(to left, #71B280, #134E5E);  /*Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to left, #71B280, #134E5E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: #70b291;  /*fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #70b291, #16586a);  /*Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #70b291, #16586a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 
@@ -69,6 +69,13 @@ main {
 	flex-wrap: wrap;
 }
 
+.landing-container {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+}
+
 .chord-container {
 	cursor: pointer;
 	margin: 20px;
@@ -126,7 +133,6 @@ main {
 .more-chords {
   margin-left: 20px;
 	cursor: pointer;
-	display: inline-block;
 }
 
 .chord-menu {
@@ -203,31 +209,19 @@ main {
 .chord-list {
 	display: flex;
 	justify-content: flex-start;
-	flex: 1 0 85%;
-	overflow: scroll;
+	overflow: auto;
 	margin: 10px;
 }
 
-.sharp {
+.sharp, .flat {
 	font-size: 60%;
 	vertical-align: 5px;
 	margin: 0 -3px;
 }
 
-.flat {
-	font-size: 60%;
-	vertical-align: 5px;
-	margin: 0 -3px;
-}
-
-.half-dim {
+.half-dim, .full-dim {
 	font-size: 65%;
 }
-
-.full-dim {
-	font-size: 65%;
-}
-
 
 .flat-landing {
 	font-size: 65%;
@@ -243,19 +237,10 @@ main {
 
 .landing-chord {
 	font-size: 4.5em;
+	padding-left: 15px;
 }
 
-.half-dim-landing {
-	font-size: 60%;
-	vertical-align: 10px;
-}
-
-.full-dim-landing {
-	font-size: 60%;
-	vertical-align: 10px;
-}
-
-.sup-landing {
+.half-dim-landing, .full-dim-landing, .sup-landing {
 	font-size: 60%;
 	vertical-align: 10px;
 }
@@ -294,5 +279,12 @@ table {
 	}
 	nav {
 		margin-bottom: 5px;
+	}
+}
+
+@media screen and (max-height: 770px) {
+	.title {
+		margin: 5px;
+		padding-left: 10px;
 	}
 }

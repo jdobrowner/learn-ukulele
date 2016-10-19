@@ -256,8 +256,9 @@ function drawChord(size, chordObject, $chordList) {
         }
         else {
             var position = (h / 2) + (fingering[i] * h);
-            context.arc(padding + (i * w), position, padding-1, 0, Math.PI*2, true);
+            context.arc(padding + (i * w), position, padding-2, 0, Math.PI*2, true);
             context.fillStyle = "white";
+            context.stroke();
             context.fill();
         }
     }
@@ -270,11 +271,11 @@ function drawChord(size, chordObject, $chordList) {
 function landingPage(size) {
 
     // display random chord
-    // var maxIndex = ukuApp.chordLibrary.length-1;
-    // var randomChordIndex = Math.floor(Math.random() * maxIndex);
-    drawChord(size, randomChord(), $('main'));
+    var landingContainer = '<div class="landing-container"></div>'
+    $('main').append(landingContainer);
+    drawChord(size, randomChord(), $('.landing-container'));
     var moreChords = "<div class='more-chords'></div>"
-    $('main').append(moreChords);
+    $('.landing-container').append(moreChords);
      drawArrow(size);
     $('.chord-name').addClass('landing-chord');
     $('sup').addClass('sup-landing');
@@ -321,12 +322,13 @@ function pulsateArrow() {
 function switchLandingPageChord() {
   var $main = $('main');
   var moreChords = "<div class='more-chords'></div>"
+  var landingContainer = '<div class="landing-container"></div>'
   $main.on('click', '.more-chords', function(e) {
-    $main.find('.chord-container').remove();
-    $main.find('.more-chords').remove();
-    drawChord(1.5, randomChord(), $('main'));
+    $main.empty();
+     $('main').append(landingContainer);
+    drawChord(1.5, randomChord(), $('.landing-container'));
     $('.chord-name').addClass('landing-chord');
-    $('main').append(moreChords);
+    $('.landing-container').append(moreChords);
     $('sup').addClass('sup-landing');
    drawArrow(1.5);
   })
