@@ -1,8 +1,22 @@
 html {
   	box-sizing: border-box;
-  	background-color: #a4daab;
+  	/*background-color: #09876b /*#a4daab; #4DA0B0 pink-#F29492 peach-#ff9068 beige-#eacda3*/
   	height: 100%;
+  	/*background-color: #4DA0B0;
+  	background-image: linear-gradient(to top right, #a4daab, #EECDA3);
+  	background-image: -webkit-gradient(linear, left top, right top, from(#eacda3), to(#C4E0E5));*/
+/*from(#eacda3), to(#C4E0E5) calm cool #b0c9d3 more saturated*/
+/*from(#a4daab), to(#9bc5c3) from greenish to bluish*/
+	background: #134E5E;  /*fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #134E5E , #71B280, #eacda3);  /*Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #134E5E, #71B280 ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+   
+  
 }
+
 
 *, *:before, *:after {
   	box-sizing: inherit;
@@ -33,7 +47,7 @@ nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 60px;
+	margin-bottom: 5%;
 	padding-top: 20px;
 }
 
@@ -44,24 +58,19 @@ nav {
 	cursor: pointer;
 }
 
-.chord-icon, .key-icon{
-	background: url(sprites.png) no-repeat;
+.chord-icon {
+	cursor: pointer;
+	margin-left: 15px;
+	width: 65px;
 }
 
-.chord-icon {
-	background-position: 0 0;
-	width: 80px;
-	height: 75px;
-	background-size: 170%;
-	cursor: pointer;
-	margin-left: 30px;
+.chord-icon:hover {
+	width: 68px; 
 }
 
 .key-icon{
-	background-position: 0 -107px ;
 	width: 150px;
 	height: 30px;
-	background-size: 130%;
 }
 
 
@@ -276,6 +285,11 @@ footer {
   	margin-top: auto;
 }
 
+a {
+	text-decoration: none;
+	color: white;
+	cursor: pointer;
+}
 
 td {
 	padding: 5px;
@@ -288,5 +302,8 @@ table {
 @media screen and (min-width: 1500px) {
 	.chord-list-container {
 		margin-left: 15%;
+	}
+	nav {
+		margin-bottom: 5px;
 	}
 }

@@ -207,7 +207,7 @@ function drawChord(size, chordObject, $chordList) {
     var gridHeight = 200 * size;
     //line segment size
     var w = gridWidth / 3;
-    var h = gridHeight / 4;
+    var h = (gridHeight / 4);
     //padding around grid
     var padding = h / 3;
     var paddingFromTop = gridHeight / 4;
@@ -228,13 +228,13 @@ function drawChord(size, chordObject, $chordList) {
 
     //draw vertical lines
     for (var i = 0; i <= gridWidth; i += h) {
-        context.moveTo(i + padding + 0.5, paddingFromTop)
-        context.lineTo(i + padding + 0.5, gridHeight + paddingFromTop)
+        context.moveTo(i + padding, paddingFromTop - size)
+        context.lineTo(i + padding , gridHeight + paddingFromTop + 1)
     }
     //draw horizontal lines
     for (var i = 0; i <= gridHeight; i += w) {
-        context.moveTo(padding, i + paddingFromTop + 0.5)
-        context.lineTo(gridWidth + padding, i + paddingFromTop + 0.5)
+        context.moveTo(padding, i + paddingFromTop)
+        context.lineTo(gridWidth + padding, i + paddingFromTop)
     }
 
     if (size === 1.5) {
