@@ -217,8 +217,9 @@ function drawChord(size, chordObject, $chordList) {
 
     var chordContainer = "<div class='chord-container " + chordObject['index'] + "' id='" + chordObject['index'] + "'></div>";
 
-    $chordList.append(chordContainer);
-    var $thisChordContainer = $chordList.children('.' + chordObject['index']);
+    addRandomChordToSlick($chordList, chordContainer);
+
+    var $thisChordContainer = $chordList.find('.' + chordObject['index']);
 
     var canvas = $('<canvas/>').attr({width: canvasWidth, height: canvasHeight});
     $thisChordContainer.append(canvas);
@@ -264,38 +265,52 @@ function drawChord(size, chordObject, $chordList) {
     }
 
     $thisChordContainer.append(getChordName(chordObject));
+
 }
 
 
 // called on initial load and when "learn:ukulele" is clicked
 function landingPage(size) {
 
-    // display random chord
-    var landingContainer = '<div class="landing-container"></div>'
-    $('main').append(landingContainer);
-    drawChord(size, randomChord(), $('.landing-container'));
-    var moreChords = "<div class='more-chords'></div>"
-    $('.landing-container').append(moreChords);
-     drawArrow(size);
+    var slickContainer = '<div class="slick-div"></div>';
+    $('main').append(slickContainer);
+    var $slickContainer = $('.slick-div');
+    $slickContainer.slick({
+      infinite: false
+    });
+
+    for (var i = 0; i < 3; i++){
+      drawChord(size, randomChord(), $slickContainer);
+    }
+
+    pulsateChord();
+
     $('.chord-name').addClass('landing-chord');
     $('sup').addClass('sup-landing');
-    pulsateChord();
 }
 
-function drawArrow(size) {
-  var wide = (size * 18)+ 1;
-  var high = (size * 63) + 1;
-  var canvas = $('<canvas/>').attr({width: wide, height: high}).appendTo('.more-chords');
-    var context = canvas.get(0).getContext("2d");
 
-   context.beginPath();
-   context.moveTo(0.5, 0.5);
-   context.lineTo(wide - 2, (high / 2) - 0.5);
-   context.lineTo(0.5, high - 0.5);
-   context.lineWidth = 3;
-   context.strokeStyle = "white";
-   context.stroke();
+
+function addRandomChordToSlick($slickContainer, chord) {
+  $slickContainer.slick('slickAdd',  chord );
 }
+
+
+
+// function drawArrow(size) {
+//   var wide = (size * 18)+ 1;
+//   var high = (size * 63) + 1;
+//   var canvas = $('<canvas/>').attr({width: wide, height: high}).appendTo('.more-chords');
+//     var context = canvas.get(0).getContext("2d");
+//
+//    context.beginPath();
+//    context.moveTo(0.5, 0.5);
+//    context.lineTo(wide - 2, (high / 2) - 0.5);
+//    context.lineTo(0.5, high - 0.5);
+//    context.lineWidth = 3;
+//    context.strokeStyle = "white";
+//    context.stroke();
+// }
 
 function pulsateChord() {
   $('main').find('.chord-container').addClass('pulsate');
