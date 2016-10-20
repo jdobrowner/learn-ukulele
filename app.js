@@ -485,8 +485,8 @@ function displayChordSuggestions(result) {
 
 
 //------------------ get major and minor scale array for any root note ---------------------------
-function majorScale(root) { return [0,2,4,5,7,9,11].map( num => (num + root) % 12 ); }
-function minorScale(root) { return [0,2,3,5,7,8,10].map( num => (num + root) % 12 ); }
+function majorScale(root) { return [0,2,4,5,7,9,11].map( function(num) { return (num + root) % 12 }); }
+function minorScale(root) { return [0,2,3,5,7,8,10].map( function(num) { return (num + root) % 12 }); }
 
 //-------------get all chords in the library that matches a key numeral --------------------------
 function getNthChords(scale) {
