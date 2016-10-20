@@ -296,9 +296,32 @@ table {
 	}
 }
 
-@media screen and (max-height: 770px) {
+@media screen and (max-width: 560px) {
 	.title {
-		margin: 5px;
-		padding-left: 10px;
+		font-size: 40px;
+		text-align: left;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	header {
+		height: 120px;
+	}
+	.title {
+		font-size: 30px;
+		padding-right: 0;
+	}
+	.chord-icon {
+		margin: 0;
+	}
+	.chord-menu {
+		zoom: 0.7;
+    -moz-transform: scale(0.7);
+	}
+}
+
+@media screen and (max-width: 340px) {
+	.title {
+		font-size: 27px;
 	}
 }
