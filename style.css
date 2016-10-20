@@ -1,9 +1,14 @@
 html {
   	box-sizing: border-box;
   	height: 100%;
-	background: #70b291;  /*fallback for old browsers */
-	background: -webkit-linear-gradient(to left, #70b291, #16586a);  /*Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to left, #70b291, #16586a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  	width: 100%;
+  	overflow-x: hidden;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#70b291+0,16586a+100 */
+	background: #70b291; /* Old browsers */
+	background: -moz-linear-gradient(left,  #70b291 0%, #16586a 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  #70b291 0%,#16586a 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  #70b291 0%,#16586a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#70b291', endColorstr='#16586a',GradientType=1 ); /* IE6-9 */
 }
 
 
@@ -30,14 +35,17 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	overflow-x: hidden;
 }
 
 nav {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	margin-bottom: 5%;
-	padding-top: 20px;
+	padding: 20px 5px 0 5px;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+	
 }
 
 .title {
@@ -45,17 +53,20 @@ nav {
 	text-align: center;
 	font-weight: 400;
 	cursor: pointer;
-	margin-right: 0;
+	margin: 0 10px;
+	display: inline-block;
 }
 
 .chord-icon {
 	cursor: pointer;
-	margin: 0 40px;
-	width: 65px;
+	width: 100px;
+	border: 5px solid transparent;
+	margin: 0 10px;
 }
 
 .chord-icon:hover {
-	width: 68px; 
+	border: none;
+	width: 100px;
 }
 
 canvas {
