@@ -42,6 +42,7 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 	overflow-x: hidden;
+  width: 100%;
 }
 
 nav {
@@ -80,21 +81,19 @@ canvas {
 }
 
 main {
-	display: flex;
+	/*display: flex;
 	align-items: center;
   	justify-content: center;
-	flex-wrap: wrap;
+	flex-wrap: wrap;*/
+  width: 100%;
 }
+
 
 .landing-container {
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: center;
-}
-
-.chord-container {
-	cursor: pointer;
 }
 
 .pulsate {
@@ -146,11 +145,6 @@ main {
 	-webkit-margin-after: 0;
 }
 
-.more-chords {
-  margin-left: 20px;
-	cursor: pointer;
-}
-
 .chord-menu {
 	display: flex;
 	justify-content: center;
@@ -182,24 +176,6 @@ main {
 	font-weight: 700;
 }
 
-.chord-list-container {
-  display: flex;
-  overflow: hidden;
-  justify-content: flex-start;
-  flex: 1 0 60%;
-  margin-left: 10%;
-  margin-right: 5%;
-}
-
-.chord-list-title {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-right: 20px;
-  min-width: 120px;
-
-}
-
 .chord-family-letter, .chord-family-numeral {
   font-size: 3em;
   text-align: center;
@@ -222,11 +198,39 @@ main {
 	padding: 0 3px;
 }
 
+.chord-list-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 10%;
+  margin-right: 5%;
+  width: 1000px;
+  /*border: 2px dashed purple;*/
+}
+
+.chord-list-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 250px;
+  /*border: 2px dashed blue;*/
+}
+
 .chord-list {
-	display: flex;
-	justify-content: flex-start;
-	overflow: auto;
-	margin: 10px;
+  width: 750px;
+  /*border: 2px dashed yellow;*/
+}
+
+.chord-container {
+	cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chord-container-container {
+  width: 100%;
+  padding: 40px;
+  /*border: 2px dashed red;*/
 }
 
 .sharp, .flat {
@@ -288,6 +292,35 @@ td {
 table {
 	padding: 0 10px;
 }
+
+.landing-left-arrow, .landing-right-arrow {
+  zoom: 0.6;
+  -moz-transform: scale(0.6);
+}
+
+.landing-left-arrow {
+    left: -100px;
+}
+
+.landing-right-arrow {
+    right: -100px;
+}
+
+.chord-page-left-arrow, .chord-page-right-arrow {
+  zoom: 0.4;
+  -moz-transform: scale(0.4);
+  z-index: 2;
+}
+
+.chord-page-left-arrow {
+  left: 0;
+}
+
+.chord-page-right-arrow {
+  right: 0;
+}
+
+:focus { outline: none; }
 
 @media screen and (min-width: 1500px) {
 	.chord-list-container {
