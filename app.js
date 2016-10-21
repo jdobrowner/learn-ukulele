@@ -291,6 +291,7 @@ function landingPage(size) {
       speed: 0,
       prevArrow: "<img class='landing-left-arrow slick-prev' src='images/right-white.svg'>",
       nextArrow: "<img class='landing-right-arrow slick-next' src='images/left-white.svg'>"
+
     });
 
     for (var i = 0; i < 2; i++){
@@ -311,6 +312,7 @@ function slickEvents() {
   //   reAddClassesSlick();
   // });
 
+
   reAddClassesSlick();
 
   $('main').on('click', '.js-prev', function(e) {
@@ -321,6 +323,11 @@ function slickEvents() {
     handleSlickStuff('left');
     reAddClassesSlick();
   });
+}
+
+function addRandomChordToSlick($slickContainer, chord) {
+  $slickContainer.slick('slickAdd',  chord );
+
 }
 
 function reAddClassesSlick() {
@@ -624,7 +631,7 @@ function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
 
   $chordList.slick({
     infinite: false,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     variableWidth: false,
     prevArrow: "<img class='chord-page-left-arrow slick-prev' src='images/right-white.svg'>",
