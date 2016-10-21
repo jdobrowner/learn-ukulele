@@ -276,13 +276,13 @@ function landingPage(size) {
     $('main').append(slickContainer);
     var $slickContainer = $('.slick-div');
     $slickContainer.slick({
-      infinite: false
+      infinite: false,
     });
 
     for (var i = 0; i < 3; i++){
       drawChord(size, randomChord(), $slickContainer);
     }
-
+ 
     pulsateChord();
 
     $('.chord-name').addClass('landing-chord');
@@ -293,6 +293,7 @@ function landingPage(size) {
 
 function addRandomChordToSlick($slickContainer, chord) {
   $slickContainer.slick('slickAdd',  chord );
+  
 }
 
 
