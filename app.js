@@ -218,9 +218,11 @@ function drawChord(size, chordObject, $chordList) {
 
     try {
       addRandomChordToSlick($chordList, chordContainer);
+      console.log("i tried");
     }
     catch(err) {
-      $chordList.append('<div>' + chordContainer + '</div>');
+      $chordList.append('<div class="chord-container-container">' + chordContainer + '</div>');
+      console.log('i caught');
     }
 
 
@@ -286,7 +288,9 @@ function landingPage(size) {
     var $slickContainer = $('.slick-div');
     $slickContainer.slick({
       infinite: false,
-      speed: 0
+      speed: 0,
+      prevArrow: "<img class='landing-left-arrow slick-prev' src='images/right-white.svg'>",
+      nextArrow: "<img class='landing-right-arrow slick-next' src='images/left-white.svg'>"
     });
 
     for (var i = 0; i < 2; i++){
@@ -302,10 +306,10 @@ function landingPage(size) {
 
 function slickEvents() {
 
-  $('.slick-div').on('swipe', function(event, slick, direction){
-    handleSwiping(direction);
-    reAddClassesSlick();
-  });
+  // $('.slick-div').on('swipe', function(event, slick, direction){
+  //   handleSwiping(direction);
+  //   reAddClassesSlick();
+  // });
 
   reAddClassesSlick();
 
@@ -400,6 +404,8 @@ function chordPage(size) {
 
       displayChords(0, ukuApp.state.isInMajorKey, size);
       removeLandingPageClasses();
+      $('.slick-next').removeClass('js-next');
+      $('.slick-prev').removeClass('js-prev');
   });
 }
 
@@ -610,11 +616,6 @@ function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
   var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div id='" + chordsTitleId + "' class='chord-list'></div></div>";
   $('main').append(chordListDiv);
   var $chordList = $('#' + chordsTitleId);
-  // $chordList.slick({
-  //   infinite: false,
-  //   slidesToShow: 4,
-  //   variableWidth: true
-  // });
 
   for (var i = 0; i < chordFamily.length; i++) {
     drawChord(size, chordFamily[i], $chordList);
@@ -623,15 +624,17 @@ function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
 
   $chordList.slick({
     infinite: false,
-    slidesToShow: 3,
+    slidesToShow: 5,
     slidesToScroll: 1,
-    variableWidth: true
+    variableWidth: false,
+    prevArrow: "<img class='chord-page-left-arrow slick-prev' src='images/right-white.svg'>",
+    nextArrow: "<img class='chord-page-right-arrow slick-next' src='images/left-white.svg'>"
   });
 
   //var w = toString(chordFamily.length * 112);
 
     //$chordList.find('.slick-list').css('width', '100%');
-    //$chordList.find('.slick-track').css('width', '100%');
+    // $chordList.find('.slick-track').css('width', '300px');
     //$chordList.find('.chord-container').css('width', '100px');
 }
 
