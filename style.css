@@ -144,11 +144,6 @@ main {
 	-webkit-margin-after: 0;
 }
 
-.more-chords {
-  margin-left: 20px;
-	cursor: pointer;
-}
-
 .chord-menu {
 	display: flex;
 	justify-content: center;
@@ -182,7 +177,7 @@ main {
 
 .chord-list-container {
   display: flex;
-  overflow: hidden;
+  overflow-x: hidden;
   justify-content: flex-start;
   flex: 1 0 60%;
   margin-left: 10%;
@@ -221,10 +216,10 @@ main {
 }
 
 .chord-list {
-	display: flex;
-	justify-content: flex-start;
-	overflow: auto;
+	/*display: flex;
+	justify-content: flex-start;*/
 	margin: 10px;
+  width: 60%;
 }
 
 .sharp, .flat {

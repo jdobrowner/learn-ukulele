@@ -13,7 +13,8 @@ var ukuApp = {
   state: {
     isInMajorKey: true, // false implies a minor key
     keyRoot: 0, // C
-    chordsAlreadyPlayed: []
+    chordsAlreadyPlayed: [],
+    slickIndex: 0
   },
   chordLibrary: [
     { rootNum: 0, isMinor: false, extension: '', fingering: [0,0,0,3] }, // C
@@ -156,7 +157,6 @@ $(function() {
   assignIndexToAllChordsInLibrary();
   landingPage(1.5);
   makeSounds();
-  switchLandingPageChord();
   chordPage(0.5);
   returnToLanding();
   changeKeyButtons();
@@ -167,7 +167,6 @@ $(function() {
 function makeSounds() {
   var tones = loadWavesIntoArray();
   var multiPlayer = new Tone.MultiPlayer(tones).toMaster();
-
 
     $('main').on('click', '.chord-container', function(e) {
       var chordIndex = Number($(this).attr('id'));
@@ -217,7 +216,14 @@ function drawChord(size, chordObject, $chordList) {
 
     var chordContainer = "<div class='chord-container " + chordObject['index'] + "' id='" + chordObject['index'] + "'></div>";
 
-    addRandomChordToSlick($chordList, chordContainer);
+    try {
+      addRandomChordToSlick($chordList, chordContainer);
+    }
+    catch(err) {
+      $chordList.append(chordContainer);
+    }
+
+
 
     var $thisChordContainer = $chordList.find('.' + chordObject['index']);
 
@@ -272,45 +278,77 @@ function drawChord(size, chordObject, $chordList) {
 // called on initial load and when "learn:ukulele" is clicked
 function landingPage(size) {
 
+    ukuApp.state.chordsAlreadyPlayed = [];
+    ukuApp.state.slickIndex = 0;
+
     var slickContainer = '<div class="slick-div"></div>';
     $('main').append(slickContainer);
     var $slickContainer = $('.slick-div');
     $slickContainer.slick({
-      infinite: false
+      infinite: false,
+      speed: 0
     });
 
-    for (var i = 0; i < 3; i++){
+    for (var i = 0; i < 2; i++){
       drawChord(size, randomChord(), $slickContainer);
     }
 
-    pulsateChord();
-
     $('.chord-name').addClass('landing-chord');
     $('sup').addClass('sup-landing');
+
+    pulsateChord();
+    slickEvents();
 }
 
+function slickEvents() {
 
+  $('.slick-div').on('swipe', function(event, slick, direction){
+    handleSwiping(direction);
+    reAddClassesSlick();
+  });
+
+  reAddClassesSlick();
+
+  $('main').on('click', '.js-prev', function(e) {
+    handleSlickStuff('right');
+    reAddClassesSlick();
+  });
+  $('main').on('click', '.js-next', function(e) {
+    handleSlickStuff('left');
+    reAddClassesSlick();
+  });
+}
+
+function reAddClassesSlick() {
+  $('.slick-next').addClass('js-next');
+  $('.slick-prev').addClass('js-prev');
+}
 
 function addRandomChordToSlick($slickContainer, chord) {
-  $slickContainer.slick('slickAdd',  chord );
+  $slickContainer.slick('slickAdd',  '<div>' + chord + '</div>');
 }
 
+function handleSwiping(direction) {
+  handleSlickStuff(direction);
+}
 
-
-// function drawArrow(size) {
-//   var wide = (size * 18)+ 1;
-//   var high = (size * 63) + 1;
-//   var canvas = $('<canvas/>').attr({width: wide, height: high}).appendTo('.more-chords');
-//     var context = canvas.get(0).getContext("2d");
-//
-//    context.beginPath();
-//    context.moveTo(0.5, 0.5);
-//    context.lineTo(wide - 2, (high / 2) - 0.5);
-//    context.lineTo(0.5, high - 0.5);
-//    context.lineWidth = 3;
-//    context.strokeStyle = "white";
-//    context.stroke();
-// }
+function handleSlickStuff(direction) {
+  if (direction === 'right') {
+    if (ukuApp.state.slickIndex > 0) {
+      ukuApp.state.slickIndex--;
+      console.log(ukuApp.state.slickIndex);
+    }
+  }
+  else {
+    ukuApp.state.slickIndex++;
+    console.log(ukuApp.state.slickIndex);
+    if (ukuApp.state.slickIndex > ukuApp.state.chordsAlreadyPlayed.length - 20) {
+      drawChord(1.5, randomChord(), $('.slick-div'));
+      $('.chord-name').addClass('landing-chord');
+      $('sup').addClass('sup-landing');
+    }
+  }
+}
 
 function pulsateChord() {
   $('main').find('.chord-container').addClass('pulsate');
@@ -318,36 +356,10 @@ function pulsateChord() {
   $('main').on('click', '.chord-container', function(e) {
     $(".chord-container").one('animationiteration webkitAnimationIteration', function() {
         $('.chord-container').removeClass('pulsate');
-
-        pulsateArrow();
-  });
-});
+      });
+    });
 }
 
-function pulsateArrow() {
-  $('main').find('.more-chords').addClass('pulsate-arrow');
-
-  $('main').on('click', '.more-chords', function(e) {
-    $(".more-chords").one('animationiteration webkitAnimationIteration', function() {
-        $('.more-chords').removeClass('pulsate-arrow');
-  });
-});
-}
-
-function switchLandingPageChord() {
-  var $main = $('main');
-  var moreChords = "<div class='more-chords'></div>"
-  var landingContainer = '<div class="landing-container"></div>'
-  $main.on('click', '.more-chords', function(e) {
-    $main.empty();
-     $('main').append(landingContainer);
-    drawChord(1.5, randomChord(), $('.landing-container'));
-    $('.chord-name').addClass('landing-chord');
-    $('.landing-container').append(moreChords);
-    $('sup').addClass('sup-landing');
-   drawArrow(1.5);
-  })
-}
 
 function randomChord() {
   var library = ukuApp.chordLibrary
@@ -358,6 +370,7 @@ function randomChord() {
     if (ukuApp.state.chordsAlreadyPlayed.length > (maxIndex - 20)) {
       console.log('cleaning up poop : ' + ukuApp.state.chordsAlreadyPlayed.length);
       ukuApp.state.chordsAlreadyPlayed = [];
+      ukuApp.state.slickIndex = 0;
     }
     console.log('already played : ' + ukuApp.state.chordsAlreadyPlayed.length);
     chord = randomChord();
@@ -593,13 +606,31 @@ function displayChords(keyRoot, isInMajorKey, size) {
 
 function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
   var listTitle = chordFamilyTitle(chordsTitleId, chordFamily[0].rootNum, isInMajorKey);
-  var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div id='" + chordsTitleId + "' class='chord-list'></div></div>";
+
+  var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div><div id='" + chordsTitleId + "' class='chord-list'></div><div></div>";
   $('main').append(chordListDiv);
   var $chordList = $('#' + chordsTitleId);
+  // $chordList.slick({
+  //   infinite: false,
+  //   slidesToShow: 4,
+  //   variableWidth: true
+  // });
 
   for (var i = 0; i < chordFamily.length; i++) {
     drawChord(size, chordFamily[i], $chordList);
   }
+
+
+  $chordList.slick({
+    infinite: false,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    variableWidth: true
+  });
+
+    //$chordList.find('.slick-list').css('width', '100%');
+    //$chordList.find('.slick-track').css('width', '100%');
+    //$chordList.find('.chord-container').css('width', '22%');
 }
 
 function assignIndexToAllChordsInLibrary() {
