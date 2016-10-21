@@ -176,12 +176,12 @@ main {
 }
 
 .chord-list-container {
-  display: flex;
+  /*display: flex;*/
   overflow-x: hidden;
-  justify-content: flex-start;
-  flex: 1 0 60%;
-  margin-left: 10%;
-  margin-right: 5%;
+  /*justify-content: flex-start;*/
+  /*flex: 1 0 60%;*/
+  /*margin-left: 10%;
+  margin-right: 5%;*/
 }
 
 .chord-list-title {
@@ -218,8 +218,8 @@ main {
 .chord-list {
 	/*display: flex;
 	justify-content: flex-start;*/
-	margin: 10px;
-  width: 60%;
+	/*margin: 10px;
+  width: 60%;*/
 }
 
 .sharp, .flat {
@@ -281,6 +281,8 @@ td {
 table {
 	padding: 0 10px;
 }
+
+:focus { outline: none; }
 
 @media screen and (min-width: 1500px) {
 	.chord-list-container {

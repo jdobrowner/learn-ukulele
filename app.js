@@ -220,7 +220,7 @@ function drawChord(size, chordObject, $chordList) {
       addRandomChordToSlick($chordList, chordContainer);
     }
     catch(err) {
-      $chordList.append(chordContainer);
+      $chordList.append('<div>' + chordContainer + '</div>');
     }
 
 
@@ -607,7 +607,7 @@ function displayChords(keyRoot, isInMajorKey, size) {
 function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
   var listTitle = chordFamilyTitle(chordsTitleId, chordFamily[0].rootNum, isInMajorKey);
 
-  var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div><div id='" + chordsTitleId + "' class='chord-list'></div><div></div>";
+  var chordListDiv = "<div class='chord-list-container'><div class='chord-list-title'>" + listTitle + "</div><div id='" + chordsTitleId + "' class='chord-list'></div></div>";
   $('main').append(chordListDiv);
   var $chordList = $('#' + chordsTitleId);
   // $chordList.slick({
@@ -628,9 +628,11 @@ function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
     variableWidth: true
   });
 
+  //var w = toString(chordFamily.length * 112);
+
     //$chordList.find('.slick-list').css('width', '100%');
     //$chordList.find('.slick-track').css('width', '100%');
-    //$chordList.find('.chord-container').css('width', '22%');
+    //$chordList.find('.chord-container').css('width', '100px');
 }
 
 function assignIndexToAllChordsInLibrary() {
