@@ -46,7 +46,6 @@ nav {
 	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: center;
-
 }
 
 .title {
@@ -63,16 +62,21 @@ nav {
   margin: 0 auto;
 }
 
+.icon {
+  width: 120px;
+  height: 64px;
+}
+
 .chord-icon {
 	cursor: pointer;
-	width: 70px;
-	border: 5px solid transparent;
+	width: 64px;
+	border: 3px solid transparent;
 	margin: 0 10px;
 }
 
 .chord-icon:hover {
 	border: none;
-	width: 70px;
+	width: 64px;
 }
 
 canvas {
@@ -427,4 +431,3 @@ table {
     -moz-transform: scale(0.6);
 	}
 }
-

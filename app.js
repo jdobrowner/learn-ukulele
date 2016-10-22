@@ -465,7 +465,8 @@ function removeClassBoldAndContainers(w,x,y,z) {
 function returnToLanding() {
 
   $('nav').on('click', '.title', function(e) {
-
+    ukuApp.state.page = 1;
+    $('.chord-icon').attr('src', 'images/chord-p-icon.svg');
     $('main').empty();
     landingPage();
   });
@@ -591,7 +592,7 @@ function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
         settings: {
             slidesToShow: 2,
         }
-       } 
+       }
     ]
   });
 }
