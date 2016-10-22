@@ -578,7 +578,21 @@ function makeChordList(chordsTitleId, chordFamily, size, isInMajorKey) {
     slidesToScroll: 1,
     variableWidth: false,
     prevArrow: "<img class='chord-page-left-arrow slick-prev' src='images/right-white.svg'>",
-    nextArrow: "<img class='chord-page-right-arrow slick-next' src='images/left-white.svg'>"
+    nextArrow: "<img class='chord-page-right-arrow slick-next' src='images/left-white.svg'>",
+    responsive: [
+       {
+        breakpoint: 1001,
+        settings: {
+            slidesToShow: 3,
+            }
+        },
+        {
+        breakpoint: 427,
+        settings: {
+            slidesToShow: 2,
+        }
+       } 
+    ]
   });
 }
 
