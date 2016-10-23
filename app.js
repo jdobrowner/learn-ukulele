@@ -159,7 +159,6 @@ $(function() {
   landingPage();
   makeSounds();
   chordPage(0.5);
-  returnToLanding();
   changeKeyButtons();
 });
 
@@ -369,6 +368,8 @@ function chordPage(size) {
 
     if (ukuApp.state.page) {
         ukuApp.state.page = 0;
+        ukuApp.state.isInMajorKey = true;
+        ukuApp.state.keyRoot = 0;
         $('main').empty();
         $(this).attr('src', 'images/landing-p-icon.svg');
 
@@ -459,17 +460,6 @@ function removeClassBoldAndContainers(w,x,y,z) {
   $('.' + y ).removeClass('bold');
   $('.' + z ).removeClass('bold');
   $('.chord-list-container').remove();
-}
-
-//--------------------------------------------return to landing page on click
-function returnToLanding() {
-
-  $('nav').on('click', '.title', function(e) {
-    ukuApp.state.page = 1;
-    $('.chord-icon').attr('src', 'images/chord-p-icon.svg');
-    $('main').empty();
-    landingPage();
-  });
 }
 
 //------------------ get major and minor scale array for any root note ---------------------------

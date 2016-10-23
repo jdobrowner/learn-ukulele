@@ -40,7 +40,8 @@ body {
 }
 
 nav {
-	margin-bottom: 60px;
+	margin-bottom: 50px;
+  margin-top: 15px;
 	padding: 20px 5px 0 5px;
 	display: flex;
 	flex-wrap: nowrap;
@@ -53,7 +54,7 @@ nav {
 	text-align: center;
 	font-weight: 400;
 	cursor: pointer;
-	margin: 0 10px;
+	margin: 0 20px;
 	display: inline-block;
 }
 
@@ -146,8 +147,6 @@ main {
 
 .bold {
 	font-weight: 700;
-  font-size: 1.06em;
-  line-height: 99%;
 }
 
 .chord-family-letter, .chord-family-numeral {
