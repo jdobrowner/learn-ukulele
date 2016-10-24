@@ -147,6 +147,7 @@ main {
 
 .bold {
 	font-weight: 700;
+  font-size: 1em;
 }
 
 .chord-family-letter, .chord-family-numeral {
@@ -371,6 +372,10 @@ table {
     -moz-transform: scale(0.65);
     padding: 0;
 	}
+  .bold {
+    zoom: 0.65;
+    -moz-transform: scale(0.65);
+  }
 	.maj-min {
 		margin-left: 0;
 	}
@@ -382,6 +387,9 @@ table {
 		zoom: 0.8;
     -moz-transform: scale(0.8);
 	}
+  .landing-chord {
+    font-size: 3em;
+  }
 	.landing-left-arrow {
 		left: -60px;
 	}
@@ -429,4 +437,7 @@ table {
 		zoom: 0.6;
     -moz-transform: scale(0.6);
 	}
+  nav {
+    padding-top: 25px;
+  }
 }
