@@ -30,4 +30,5 @@
 - Slick - - Chord carousel with swipe capability
 
 
+
 "learn : ukulele" was created by Monika [monika.zarako@gmail.com] and Jason [j@jasondobrowner.com].
