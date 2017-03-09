@@ -33,19 +33,19 @@
 
 ## add a chord
 
-You can add a new ukulele chord, as long as the chord position is within the first four frets of the ukulele.
+You can add a new ukulele chord, as long as the chord position is within the first four frets of the ukulele. Clone the repository, and to run the project on a local server you can `npm install -g http-server`, run `http-server` in the ternimal, then go to localhost:8080.
 
 #### steps
 
-- In app.js, add a new object to the chord library array (ukuApp.chordLibrary).
+- In app.js, add a new object to the chord library array (`ukuApp.chordLibrary`).
 
-- For the key value of "rootNum" map the root of the chord to the appropriate number where C -> 0, C# -> 1, D -> 2, ... , B -> 11.
+- For the key value of `rootNum` map the root of the chord to the appropriate number where C -> 0, C# -> 1, D -> 2, ... , B -> 11.
 
-- For the isMinor key value put 'false' if the chord is minor or diminished, or 'true' if the chord is major.
+- For the `isMinor` key value put `false` if the chord is minor or diminished, or `true` if the chord is major.
 
-- For the extension key value call one of the functions at the top of app.js, or put an empty string if the chord is a plain triad (D major, D minor). For example, a C major 7 would have "extension: maj7()", and a G suspended 4 would have "extension: sus(4)".
+- For the extension key value call one of the functions at the top of app.js, or put an empty string if the chord is a plain triad (D major, D minor). For example, a C major 7 would have `extension: maj7()`, and a G suspended 4 would have `extension: sus(4)`.
 
-- For the fingering key put in a 4-dimensional array of integers with a range of 0 to 4 where each element represents the fret where you would place a finger on the ukulele (0 being an open string, 4 being the fourth fret). The first element of the array is for the G string, the second for the C string, the third for the E string, and the fourth for the A string.
+- For the fingering key put in a 4-dimensional array of integers with a range of `0` to `4` where each element represents the fret where you would place a finger on the ukulele (0 being an open string, 4 being the fourth fret). The first element of the array is for the G string, the second for the C string, the third for the E string, and the fourth for the A string.
 
 
 
