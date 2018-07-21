@@ -4,7 +4,9 @@
   "description": "A website about ukelele chords",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -c-1",
+    "deploy": "surge --domain learnukulele.xyz"
   },
   "repository": {
     "type": "git",
